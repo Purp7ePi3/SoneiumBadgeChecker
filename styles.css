@@ -86,14 +86,14 @@ button:hover {
     font-weight: bold;
     margin: 0 0 5px 0;
 }
-.nft-url {
+/* .nft-url {
     color: #4285F4;
     text-decoration: none;
     word-break: break-all;
 }
 .nft-url:hover {
     text-decoration: underline;
-}
+} */
 .loading {
     text-align: center;
     display: none;
