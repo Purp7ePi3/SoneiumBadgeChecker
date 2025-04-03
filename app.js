@@ -78,8 +78,8 @@ async function scanAllContracts() {
         const data = await fetchNFTCollections(walletAddress);
         
         if (!data.items || data.items.length === 0) {
-            resultsDiv.innerHTML = `<h2>${contractObj.name} (NFT Mancante)</h2>
-                <p>Il wallet non contiene NFT.</p>`;
+            resultsDiv.innerHTML = `<h2>${contractObj.name} (Missing NFT)</h2>
+                <p>Wallet does't have this nft.</p>`;
             toggleLoading(false);
             return;
         }
@@ -102,7 +102,7 @@ async function scanAllContracts() {
         
     } catch (error) {
         console.error("Error scanning NFTs:", error);
-        showError(`Errore nella scansione degli NFT: ${error.message}`);
+        showError(`Error scanning NFTs: ${error.message}`);
     } finally {
         toggleLoading(false);
     }

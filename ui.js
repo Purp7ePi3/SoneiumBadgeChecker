@@ -11,7 +11,7 @@ function updateContractsList(contracts) {
     contractsList.innerHTML = '';
     
     if (contracts.length === 0) {
-        contractsList.innerHTML = '<p>Nessun contratto aggiunto</p>';
+        contractsList.innerHTML = '<p>Any contract added</p>';
         return;
     }
     
@@ -20,7 +20,7 @@ function updateContractsList(contracts) {
         contractDiv.className = 'contract-item';
         contractDiv.innerHTML = `
             <span class="contract-address">${contract.address}</span>
-            <span class="contract-remove" onclick="removeContract(${index})">Rimuovi</span>
+            <span class="contract-remove" onclick="removeContract(${index})">Remove</span>
         `;
         contractsList.appendChild(contractDiv);
     });
@@ -77,7 +77,7 @@ function isVideoFile(url) {
  * @returns {string} HTML da visualizzare
  */
 function createResultsHTML(contracts, collectionsByContract) {
-    let html = `<h2>Risultati della scansione</h2>`;
+    let html = `<h2>Results</h2>`;
     let foundAny = false;
     let totalBadges = 0;
     let badgesByCollection = [];
@@ -89,7 +89,7 @@ function createResultsHTML(contracts, collectionsByContract) {
         if (!matchingCollection) {
             html += `
                 <div class="collection-header">
-                    <h3 class="collection-name">${contractObj.name} (NFT Mancante)</h3>
+                    <h3 class="collection-name">${contractObj.name} (Missing NFT)</h3>
                     <p class="collection-address">${contractAddress}</p>
                 </div>
             `;
@@ -120,7 +120,7 @@ function createResultsHTML(contracts, collectionsByContract) {
             for (const instance of matchingCollection.token_instances) {
                 const mediaUrl = instance.image_url || IMAGE_PLACEHOLDER;
                 const name = instance.metadata?.name || matchingCollection.token.name;
-                const externalUrl = instance.external_app_url || 'URL non disponibile';
+                const externalUrl = instance.external_app_url || 'URL not available';
                 
                 let mediaElement;
                 if (isVideoFile(mediaUrl)) {
@@ -150,7 +150,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                 `;
             }
         } else {
-            html += `<p>Nessun token instance trovato per questa collezione.</p>`;
+            html += `<p>Any token found for this collection.</p>`;
         }
     }
     
@@ -158,8 +158,8 @@ function createResultsHTML(contracts, collectionsByContract) {
     if (foundAny) {
         html = `
             <div class="badge-summary">
-                <h2>Riepilogo Badge</h2>
-                <p class="badge-total">Totale badge trovati: <strong>${totalBadges}</strong></p>
+                <h2>Badge summary</h2>
+                <p class="badge-total">Total Badges: <strong>${totalBadges}</strong></p>
                 <ul class="badge-list">
                     ${badgesByCollection.map(collection => 
                         `<li>${collection.name}: ${collection.count} badge</li>`).join('')}
@@ -169,7 +169,7 @@ function createResultsHTML(contracts, collectionsByContract) {
         `;
     } else {
         html += `
-            <p>Nessuno degli indirizzi di contratto specificati ha NFT in questo wallet.</p>
+            <p>None of the specified contract addresses have NFTs in this wallet.</p>
         `;
     }
     

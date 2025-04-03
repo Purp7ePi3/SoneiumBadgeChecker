@@ -29,15 +29,15 @@ function isContractDuplicate(address, contractsList) {
  */
 function validateScanInputs(walletAddress, contracts) {
     if (!walletAddress) {
-        return { valid: false, message: 'Inserisci un indirizzo wallet valido' };
+        return { valid: false, message: 'Valid address needed' };
     }
     
     if (!isValidAddress(walletAddress)) {
-        return { valid: false, message: 'Indirizzo wallet non valido' };
+        return { valid: false, message: 'Wallet address not valid' };
     }
     
     if (contracts.length === 0) {
-        return { valid: false, message: 'Aggiungi almeno un contratto NFT da scansionare' };
+        return { valid: false, message: 'Need at least 1 contract to scan' };
     }
     
     return { valid: true };
