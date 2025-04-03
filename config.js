@@ -9,6 +9,7 @@ const DEFAULT_CONTRACTS = [
     { address: "0x890a19A1Dd75AAEcc4eDFce4685bb59C8ABEe78A", name: "Posse"},
     { address: "0x2A21B17E366836e5FFB19bd47edB03b4b551C89d", name: "OG badge 1"},
     { address: "0x1eC6AACC79f3c4817d7fea2268e1c54C6b2662Fb", name: "Owlto badge"},
+    { address: "0x4591D540B692CBeD60Db7781B7683910f7a3BF8C", name: "NFT2Me"}
 
 ];
 
