@@ -78,7 +78,7 @@ async function scanAllContracts() {
         const data = await fetchNFTCollections(walletAddress);
         
         if (!data.items || data.items.length === 0) {
-            resultsDiv.innerHTML = `<h2>${contractObj.name} (Missing NFT)</h2>
+            resultsDiv.innerHTML = `<h2>${data.name} (Missing NFT)</h2>
                 <p>Wallet does't have this nft.</p>`;
             toggleLoading(false);
             return;
