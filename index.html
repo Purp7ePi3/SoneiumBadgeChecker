@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificatore NFT Blockscout Multi-Contratto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Verificatore NFT Blockscout Multi-Contratto</h1>
+        
+        <div class="form-group">
+            <label for="walletAddress">Indirizzo del Wallet:</label>
+            <input type="text" id="walletAddress" placeholder="0x..." value="">
+        </div>
+        
+        <div class="form-group">
+            <label for="contractAddress">Indirizzo del Contratto NFT:</label>
+            <input type="text" id="contractAddress" placeholder="0x...">
+            <div class="buttons-container">
+                <button class="add-button" onclick="addContract()">Aggiungi Contratto</button>
+                <button class="scan-button" onclick="scanAllContracts()">Scansiona Tutti</button>
+            </div>
+            <div id="contractsList" class="contract-list">
+                <!-- I contratti saranno aggiunti qui -->
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <p>Ricerca in corso...</p>
+        </div>
+        
+        <div class="error" id="error"></div>
+        
+        <div id="results"></div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="validation.js"></script>
+    <script src="ui.js"></script>
+    <script src="api.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
