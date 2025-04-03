@@ -89,7 +89,7 @@ function createResultsHTML(contracts, collectionsByContract) {
         if (!matchingCollection) {
             html += `
                 <div class="collection-header">
-                    <h3 class="collection-name">Nessun NFT trovato</h3>
+                    <h3 class="collection-name">${contractObj.name} (NFT Mancante)</h3>
                     <p class="collection-address">${contractAddress}</p>
                 </div>
             `;
