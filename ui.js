@@ -120,7 +120,7 @@ function createResultsHTML(contracts, collectionsByContract) {
             for (const instance of matchingCollection.token_instances) {
                 const mediaUrl = instance.image_url || IMAGE_PLACEHOLDER;
                 const name = instance.metadata?.name || matchingCollection.token.name;
-                const externalUrl = instance.external_app_url || 'URL not available';
+                // const externalUrl = instance.external_app_url || 'URL not available';
                 
                 let mediaElement;
                 if (isVideoFile(mediaUrl)) {
