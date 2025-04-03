@@ -111,7 +111,7 @@ function createResultsHTML(contracts, collectionsByContract) {
         
         html += `
             <div class="collection-header">
-                <h3 class="collection-name">${matchingCollection.token.name} (${collectionBadgeCount} badge)</h3>
+                <h3 class="collection-name">${matchingCollection.token.name} (${matchingCollection.token.symbol} badge)</h3>
                 <p class="collection-address">${matchingCollection.token.address}</p>
             </div>
         `;
