@@ -143,7 +143,6 @@ function createResultsHTML(contracts, collectionsByContract) {
                             <div class="nft-details">
                                 <h3 class="nft-name">${name}</h3>
                                 <p><strong>Token ID:</strong> ${instance.id}</p>
-                                <p><strong>URL esterno:</strong> <a href="${externalUrl}" target="_blank" class="nft-url">${externalUrl}</a></p>
                             </div>
                         </div>
                     </div>
