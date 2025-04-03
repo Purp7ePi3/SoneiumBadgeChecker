@@ -155,6 +155,19 @@ button:hover {
     font-family: monospace;
     color: #555;
 }
+.collection-stats {
+    display: flex;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #c8e6c9;
+}
+.collection-stats p {
+    margin: 0 20px 0 0;
+    font-size: 14px;
+}
+.collection-stats p strong {
+    color: #2e7d32;
+}
 .add-button {
     background-color: #2196F3;
 }
@@ -179,4 +192,42 @@ button:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}/* Add these styles to your existing CSS file */
+.badge-stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #c8e6c9;
+}
+
+.badge-stats p {
+    margin: 0 20px 0 0;
+    font-size: 14px;
+}
+
+.badge-stats p strong {
+    color: #2e7d32;
+}
+
+.badge-summary {
+    background-color: #e0f7fa;
+    border-left: 4px solid #00bcd4;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.badge-total {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.badge-list {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.badge-list li {
+    margin-bottom: 5px;
 }

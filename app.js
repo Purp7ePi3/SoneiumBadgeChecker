@@ -78,16 +78,26 @@ async function scanAllContracts() {
         const data = await fetchNFTCollections(walletAddress);
         
         if (!data.items || data.items.length === 0) {
-            updateResults(`<h2>Nessun NFT Trovato</h2>
-                <p>Il wallet non contiene NFT.</p>`);
+            resultsDiv.innerHTML = `<h2>Nessun NFT Trovato</h2>
+                <p>Il wallet non contiene NFT.</p>`;
+            toggleLoading(false);
             return;
         }
         
         // Organize collections by contract address
         const collectionsByContract = organizeCollectionsByContract(data);
         
+        // Fetch token info for each contract to get total supply
+        const tokenInfoByContract = {};
+        for (const contract of appState.contracts) {
+            const tokenInfo = await fetchTokenInfo(contract.address);
+            if (tokenInfo) {
+                tokenInfoByContract[contract.address.toLowerCase()] = tokenInfo;
+            }
+        }
+        
         // Generate and display results
-        const resultsHTML = createResultsHTML(appState.contracts, collectionsByContract);
+        const resultsHTML = createResultsHTML(appState.contracts, collectionsByContract, tokenInfoByContract);
         updateResults(resultsHTML);
         
     } catch (error) {
