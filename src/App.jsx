@@ -7,6 +7,7 @@ import AboutCard from './components/AboutCard';
 import Toast from './components/Toast';
 import { DEFAULT_CONTRACTS } from './constants';
 import './styles.css';
+import { Analytics } from '@vercel/analytics/react'; // Importa il componente Analytics
 
 function App() {
     const [contracts, setContracts] = useState([...DEFAULT_CONTRACTS]);
@@ -20,6 +21,9 @@ function App() {
 
     return (
         <>
+            {/* Aggiungi il componente Analytics prima di qualsiasi altro contenuto */}
+            <Analytics />
+
             <Header />
             
             <div className="container py-4">
