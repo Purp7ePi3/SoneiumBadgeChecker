@@ -14,8 +14,7 @@ const DEFAULT_CONTRACTS = [
     { address: "0x38bD4363b7Cd4040fAC6EEa5eF5d38E934AebD65", name: "CoPump"},
 { address: "0xCA707D22E248740aDaA9C63580F7A35201B18d30", name: "UneWeb"},
 { address: "0x11B2876C58cFb7501Db60d0112AF8A8EfEB0A81D", name: "KyoFinance"},
-
-
+{ address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
 
 ];  
 
