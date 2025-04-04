@@ -64,14 +64,8 @@ function isVideoFile(url) {
 }
 
 /**
- * Crea il contenuto HTML per i risultati della scansione
- * @param {Array} contracts - Lista dei contratti scansionati
- * @param {Object} collectionsByContract - Collezioni NFT organizzate per contratto
- * @param {Object} tokenInfoByContract - Informazioni token per ogni contratto
- * @returns {string} HTML da visualizzare
- */
-/**
  * Crea il contenuto HTML per i risultati della scansione, includendo il conteggio dei badge
+ * e informazioni sui badge mancanti
  * @param {Array} contracts - Lista dei contratti scansionati
  * @param {Object} collectionsByContract - Collezioni NFT organizzate per contratto
  * @returns {string} HTML da visualizzare
@@ -81,18 +75,36 @@ function createResultsHTML(contracts, collectionsByContract) {
     let foundAny = false;
     let totalBadges = 0;
     let badgesByCollection = [];
+    let missingBadges = [];
+    
+    // Define expected badge counts for specific collections
+    const expectedBadgeCounts = {
+        'Owlto badge': 6,
+        'Orbiter': 2
+    };
     
     for (const contractObj of contracts) {
         const contractAddress = contractObj.address;
         const matchingCollection = collectionsByContract[contractAddress.toLowerCase()];
+        const collectionName = contractObj.name;
         
         if (!matchingCollection) {
             html += `
                 <div class="collection-header">
-                    <h3 class="collection-name">${contractObj.name} (Missing NFT)</h3>
+                    <h3 class="collection-name">${collectionName} (Missing NFT)</h3>
                     <p class="collection-address">${contractAddress}</p>
                 </div>
             `;
+            
+            // Add to missing badges if it's one of the ones we're tracking
+            if (expectedBadgeCounts[collectionName]) {
+                missingBadges.push({
+                    name: collectionName,
+                    count: 0,
+                    expected: expectedBadgeCounts[collectionName],
+                    missing: expectedBadgeCounts[collectionName]
+                });
+            }
             continue;
         }
         
@@ -103,10 +115,26 @@ function createResultsHTML(contracts, collectionsByContract) {
             collectionBadgeCount = matchingCollection.token_instances.length;
             totalBadges += collectionBadgeCount;
             
+            const tokenName = matchingCollection.token.name;
             badgesByCollection.push({
-                name: matchingCollection.token.name,
+                name: tokenName,
                 count: collectionBadgeCount
             });
+            
+            // Check if this is one of the collections we're tracking for missing badges
+            if (expectedBadgeCounts[tokenName]) {
+                const expected = expectedBadgeCounts[tokenName];
+                const missing = expected - collectionBadgeCount;
+                
+                if (missing > 0) {
+                    missingBadges.push({
+                        name: tokenName,
+                        count: collectionBadgeCount,
+                        expected: expected,
+                        missing: missing
+                    });
+                }
+            }
         }
         
         html += `
@@ -120,7 +148,6 @@ function createResultsHTML(contracts, collectionsByContract) {
             for (const instance of matchingCollection.token_instances) {
                 const mediaUrl = instance.image_url || IMAGE_PLACEHOLDER;
                 const name = instance.metadata?.name || matchingCollection.token.name;
-                // const externalUrl = instance.external_app_url || 'URL not available';
                 
                 let mediaElement;
                 if (isVideoFile(mediaUrl)) {
@@ -153,8 +180,22 @@ function createResultsHTML(contracts, collectionsByContract) {
         }
     }
     
-    // Aggiungi il riepilogo con il conteggio totale dei badge
+    // Add the summary with the total badge count and missing badges
     if (foundAny) {
+        // Create the missing badges section
+        let missingBadgesHTML = '';
+        if (missingBadges.length > 0) {
+            missingBadgesHTML = `
+                <div class="missing-badges">
+                    <h3>Missing Badges:</h3>
+                    <ul class="badge-list">
+                        ${missingBadges.map(badge => 
+                            `<li>${badge.name}: ${badge.count}/${badge.expected} (missing ${badge.missing})</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+        
         html = `
             <div class="badge-summary">
                 <h2>Badge summary</h2>
@@ -163,6 +204,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                     ${badgesByCollection.map(collection => 
                         `<li>${collection.name}: ${collection.count} badge</li>`).join('')}
                 </ul>
+                ${missingBadgesHTML}
             </div>
             ${html}
         `;
