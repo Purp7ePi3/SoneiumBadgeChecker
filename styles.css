@@ -135,6 +135,7 @@ h1, h2, h3, h4 {
 
 .nft-header {
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
 }
 
@@ -229,5 +230,34 @@ h1, h2, h3, h4 {
     .nft-item {
         background-color: #1f2937;
         border-color: #374151;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .nft-header {
+        flex-direction: row;
+    }
+}
+
+/* Make the wallet address text responsive */
+.wallet-address, .collection-address, .nft-details p {
+    word-break: break-all;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+/* Make images more responsive */
+.nft-image, .nft-video, .video-container {
+    width: 100%;
+    height: auto;
+    max-width: 120px;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 576px) {
+    .nft-image, .nft-video, .video-container {
+        margin-right: 1.25rem;
+        margin-bottom: 0;
     }
 }
