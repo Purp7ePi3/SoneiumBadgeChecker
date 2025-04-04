@@ -1,47 +1,26 @@
 :root {
     --primary-color: #6366f1;
     --secondary-color: #818cf8;
-    --background-color: #f9fafb;
-    --card-background: #ffffff;
-    --text-color: #1f2937;
-    --border-color: #e5e7eb;
     --success-color: #10b981;
     --error-color: #ef4444;
     --heading-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
     --body-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    --bs-heading-color: #f8f9fa;
+    --bs-body-color: #f8f9fa;
+    --bs-light-rgb: #1f2937;
+    --bs-card-color:#1f2937;
+    --card-backgound: #1f2937;
 }
 
 body {
     font-family: var(--body-font);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 0;
-    margin: 0;
+    background-color: #f9fafb;
 }
 
-.header {
-    background-color: var(--card-background);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+/* Header styles */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
 }
 
 .logo {
@@ -49,199 +28,70 @@ body {
     font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-decoration: none;
 }
 
-.page-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 2rem;
-}
-
-.main-content {
-    background-color: var(--card-background);
+/* Card customizations */
+.card {
     border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-}
-
-.sidebar {
-    align-self: start;
-    position: sticky;
-    top: 5rem;
-}
-
-.sidebar-card {
-    background-color: var(--card-background);
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
 }
 
 h1, h2, h3, h4 {
     font-family: var(--heading-font);
-    color: var(--text-color);
     line-height: 1.2;
 }
 
-h1 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-}
-
-h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}
-
-h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-color);
-}
-
-input[type="text"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-family: var(--body-font);
-    transition: border-color 0.2s;
-}
-
-input[type="text"]:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-}
-
-.button {
-    display: inline-block;
+/* Button customizations */
+.btn-primary {
     background-color: var(--primary-color);
-    color: white;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-success:hover {
+    background-color: #0e9f6e;
+    border-color: #0e9f6e;
+}
+
+/* Wallet list */
+.wallet-item {
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
+    border-left: 3px solid var(--primary-color) !important;
 }
 
-.button:hover {
-    background-color: var(--secondary-color);
+.wallet-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(3px);
 }
 
-.button:active {
-    transform: translateY(1px);
+.wallet-address {
+    display: block;
+    font-family: monospace;
+    font-size: 0.8125rem;
+    margin-bottom: 0.25rem;
+    color: #4b5563;
 }
 
-.button-secondary {
-    background-color: #f3f4f6;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+.wallet-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.875rem;
 }
 
-.button-secondary:hover {
-    background-color: #e5e7eb;
-}
-
-.button-scan {
-    background-color: var(--success-color);
-}
-
-.button-scan:hover {
-    background-color: #0e9f6e;
-}
-
-.buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin: 1rem 0;
-}
-
-.error {
-    color: var(--error-color);
-    padding: 0.75rem;
-    background-color: rgba(239, 68, 68, 0.1);
-    border-radius: 0.5rem;
-    margin: 1rem 0;
-    display: none;
-}
-
-.loading {
-    display: none;
-    margin: 1rem 0;
-    text-align: center;
-    font-weight: 500;
-    color: var(--primary-color);
-}
-
-.contracts-container {
-    border: 1px solid var(--border-color);
-    border-radius: 0.5rem;
-    margin-top: 1rem;
-    overflow: hidden;
-}
-
-.contract-list {
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-.contract-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.contract-item:last-child {
-    border-bottom: none;
-}
-
-.contract-address {
-    font-weight: 500;
-}
-
-.contract-remove {
-    color: var(--error-color);
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: 0.25rem;
-    line-height: 1;
-}
-
-.contract-remove:hover {
-    background-color: rgba(239, 68, 68, 0.1);
-}
-
-#results {
-    margin-top: 2rem;
-}
-
+/* Results display */
 .badge-summary {
-    background-color: rgba(99, 102, 241, 0.1);
+    background-color: rgba(99, 102, 241, 0.2);
     border-radius: 0.5rem;
     padding: 1.5rem;
     margin-bottom: 2rem;
@@ -251,15 +101,6 @@ input[type="text"]:focus {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 1rem;
-}
-
-.badge-list {
-    list-style-type: disc;
-    margin-left: 1.5rem;
-}
-
-.badge-list li {
-    margin-bottom: 0.5rem;
 }
 
 .collection-header {
@@ -287,9 +128,9 @@ input[type="text"]:focus {
     padding: 1.25rem;
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
-    background-color: var(--card-background);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-color);
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05);
+    border: 1px solid #e5e7eb;
 }
 
 .nft-header {
@@ -322,44 +163,6 @@ input[type="text"]:focus {
     font-size: 1.125rem;
 }
 
-.wallet-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.wallet-item {
-    padding: 0.75rem;
-    background-color: #f3f4f6;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    border-left: 3px solid var(--primary-color);
-}
-
-.wallet-item:hover {
-    background-color: #e5e7eb;
-    transform: translateX(3px);
-}
-
-.wallet-address {
-    display: block;
-    font-family: monospace;
-    font-size: 0.8125rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 0.25rem;
-    color: #4b5563;
-}
-
-.wallet-label {
-    display: block;
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 0.875rem;
-}
-
 .missing-badges {
     margin-top: 1rem;
     padding-top: 1rem;
@@ -376,49 +179,22 @@ input[type="text"]:focus {
     color: var(--error-color);
 }
 
-.social-links {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.social-link {
-    color: #64748b;
-    font-size: 1.25rem;
-    transition: color 0.2s;
-}
-
-.social-link:hover {
-    color: var(--primary-color);
-}
-
-@media (max-width: 768px) {
-    .page-container {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        position: static;
-    }
-
-    .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-}
-
-/* Dark mode styles */
+/* Dark mode support */
 @media (prefers-color-scheme: dark) {
-    :root {
-        --background-color: #111827;
-        --card-background: #1f2937;
-        --text-color: #f9fafb;
-        --border-color: #374151;
+    body {
+        background-color: #111827;
     }
 
-    .contract-item {
-        border-bottom-color: #374151;
+    .navbar, .card, .footer {
+        background-color: #1f2937 !important;
+    }
+
+    .card {
+        border-color: #374151;
+    }
+
+    .text-muted {
+        color: #9ca3af !important;
     }
 
     .collection-header {
@@ -435,12 +211,11 @@ input[type="text"]:focus {
     }
 
     .wallet-item {
-        background-color: #374151;
-        border-left-color: var(--primary-color);
+        background-color: #374151 !important;
     }
 
     .wallet-item:hover {
-        background-color: #4b5563;
+        background-color: #4b5563 !important;
     }
 
     .wallet-address {
@@ -451,58 +226,8 @@ input[type="text"]:focus {
         background-color: rgba(99, 102, 241, 0.2);
     }
 
-    .button-secondary {
-        background-color: #374151;
-        color: #f9fafb;
-        border-color: #4b5563;
+    .nft-item {
+        background-color: #1f2937;
+        border-color: #374151;
     }
-
-    .button-secondary:hover {
-        background-color: #4b5563;
-    }
-}
-
-.site-footer {
-    
-    background-color: var(--card-background);
-    border-top: 1px solid var(--border-color);
-    padding: 1.5rem 0;
-    text-align: center;
-    margin-top: 3rem;
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
-
-.toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    font-weight: 500;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 9999;
-}
-
-.toast.show {
-    opacity: 1;
-}
-
-.footer-card {
-    background-color: var(--card-background);
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
 }

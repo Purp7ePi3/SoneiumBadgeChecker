@@ -50,23 +50,23 @@ function updateContractsList(contracts) {
         contractsList.innerHTML = '';
         
         if (contracts.length === 0) {
-            contractsList.innerHTML = '<p style="padding: 0.75rem 1rem; color: #64748b;">No contracts added yet</p>';
+            contractsList.innerHTML = '<p class="p-3 text-muted">No contracts added yet</p>';
             return;
         }
         
         contracts.forEach((contract, index) => {
             const contractDiv = document.createElement('div');
-            contractDiv.className = 'contract-item';
+            contractDiv.className = 'list-group-item d-flex justify-content-between align-items-center';
             
             const isDefaultContract = DEFAULT_CONTRACTS.some(
                 dc => dc.address.toLowerCase() === contract.address.toLowerCase()
             );
             
             const removeButton = isDefaultContract ? '' : 
-                `<span class="contract-remove" onclick="removeContract(${index})">✕</span>`;
+                `<button class="btn btn-sm btn-outline-danger" onclick="removeContract(${index})">✕</button>`;
             
             contractDiv.innerHTML = `
-                <span class="contract-address">${contract.name}</span>
+                <span class="fw-medium">${contract.name}</span>
                 ${removeButton}
             `;
             contractsList.appendChild(contractDiv);
@@ -107,7 +107,7 @@ function removeContract(index) {
 
 // Results display
 function createResultsHTML(contracts, collectionsByContract) {
-    let html = `<h2>Scan Results</h2>`;
+    let html = `<h2 class="mt-4 mb-3">Scan Results</h2>`;
     let foundAny = false;
     let totalBadgesFound = 0;
     let totalBadgesPossible = 0;
@@ -126,7 +126,6 @@ function createResultsHTML(contracts, collectionsByContract) {
         const badgeInfo = BADGE_INFO[collectionName] || { total: 1, description: "Badge" };
         
         if (!matchingCollection) {
-
             missingBadges.push({
                 name: collectionName,
                 count: 0,
@@ -165,7 +164,7 @@ function createResultsHTML(contracts, collectionsByContract) {
         }
         
         html += `
-            <div class="collection-header">
+            <div class="collection-header mt-4">
                 <h3 class="collection-name">
                 ${matchingCollection.token.name}
                 ${matchingCollection.token.symbol ? `(${matchingCollection.token.symbol})` : ''} 
@@ -221,7 +220,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                 `;
             }
         } else {
-            html += `<p style="margin-bottom: 1.5rem;">No tokens found for this collection.</p>`;
+            html += `<p class="mb-4 text-muted">No tokens found for this collection.</p>`;
         }
     }
     
@@ -241,13 +240,9 @@ function createResultsHTML(contracts, collectionsByContract) {
         }
         
         // Add badge collection summary
-        let badgeCollectionHTML = '';
-        
         html = `
             <div class="badge-summary">
                 <p class="badge-total">Total Badges Found: ${totalBadgesFound}/${totalBadgesPossible} (${((totalBadgesFound/totalBadgesPossible)*100).toFixed(1)}%)</p>
-                
-                ${badgeCollectionHTML}
                 ${missingBadgesHTML}
             </div>
         ` + html;
@@ -289,5 +284,4 @@ async function scanAllContracts() {
     } finally {
         toggleLoading(false);
     }
-
 }

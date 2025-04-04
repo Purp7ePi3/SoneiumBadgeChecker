@@ -27,15 +27,20 @@ function validateScanInputs(walletAddress, contracts) {
 function showError(message) {
     const errorDiv = document.getElementById('error');
     errorDiv.innerHTML = message;
-    errorDiv.style.display = 'block';
+    errorDiv.classList.remove('d-none');
 }
 
 function hideError() {
-    document.getElementById('error').style.display = 'none';
+    document.getElementById('error').classList.add('d-none');
 }
 
 function toggleLoading(show) {
-    document.getElementById('loading').style.display = show ? 'block' : 'none';
+    const loadingElement = document.getElementById('loading');
+    if (show) {
+        loadingElement.classList.remove('d-none');
+    } else {
+        loadingElement.classList.add('d-none');
+    }
 }
 
 // Media helpers
