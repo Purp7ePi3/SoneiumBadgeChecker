@@ -58,7 +58,7 @@ body {
 .wallet-label {
     display: block;
     font-weight: bold;
-    color: #2196F3;
+    color: #090909;
 }
 h1 {
     color: #333;
@@ -294,4 +294,24 @@ button:hover {
         width: 100%;
         position: static;
     }
+
+}
+
+.wallet-item {
+    cursor: pointer; /* Cambia il cursore per suggerire che è cliccabile */
+    transition: background-color 0.3s ease; /* Aggiunge un effetto di transizione */
+}
+
+.wallet-item:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Cambia lo sfondo al passaggio del mouse */
+    transform: scale(1.05); /* Leggera espansione quando si passa sopra */
+}
+
+.wallet-address {
+    font-weight: bold; /* Rende il testo più visibile */
+    color: #007bff; /* Colore del testo che indica cliccabilità */
+}
+
+.wallet-address:hover {
+    text-decoration: underline; /* Sottolinea il testo quando ci si passa sopra */
 }

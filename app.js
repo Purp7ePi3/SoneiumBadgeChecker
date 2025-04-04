@@ -109,3 +109,17 @@ async function scanAllContracts() {
         toggleLoading(false);
     }
 }
+
+// Aggiungi un evento di clic su tutti gli elementi con la classe "wallet-address"
+document.querySelectorAll('.wallet-address').forEach(item => {
+    item.addEventListener('click', () => {
+        const text = item.innerText;
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                alert('Wallet address copied to clipboard');
+            })
+            .catch(err => {
+                console.error('Error copying text: ', err);
+            });
+    });
+});

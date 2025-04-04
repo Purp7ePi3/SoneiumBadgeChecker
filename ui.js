@@ -81,6 +81,7 @@ function isVideoFile(url) {
 function getLocalImageUrl(contractName) {
     // Strip special characters and spaces for filename safety
     const safeFileName = contractName.replace(/[^a-zA-Z0-9]/g, '');
+    console.log(safeFileName);
     return `./${safeFileName}.jpg`;
 }
 
@@ -109,7 +110,7 @@ function createResultsHTML(contracts, collectionsByContract) {
     // Define expected badge counts for specific collections
     const expectedBadgeCounts = {
         'Owlto badge': 6,
-        'Orbiter': 2,
+        // 'Orbiter': 2,
         'Mithraeum: Badge': 1,
         'OmniHub': 1,
         'Posse': 1,
@@ -190,17 +191,16 @@ function createResultsHTML(contracts, collectionsByContract) {
                 
                 // Check for animation_url first, then fall back to image_url, then local image
                 let mediaUrl;
-                
-                if (instance.metadata?.animation_url && 
+                if (instance.image_url && 
+                    instance.image_url !== "null" && 
+                    instance.image_url !== null) {
+             // Use image URL if available
+                    mediaUrl = instance.image_url;
+                } else if (instance.metadata?.animation_url && 
                     instance.metadata.animation_url !== "null" && 
                     instance.metadata.animation_url !== null) {
                     // Use animation URL if available
                     mediaUrl = instance.metadata.animation_url;
-                } else if (instance.image_url && 
-                           instance.image_url !== "null" && 
-                           instance.image_url !== null) {
-                    // Use image URL if available
-                    mediaUrl = instance.image_url;
                 } else {
                     // Use local image file based on contract name
                     mediaUrl = localImageUrl;
@@ -217,7 +217,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                                 Il tuo browser non supporta i video.
                             </video>
                         </div>
-                    `;
+                    `;                
                 } else {
                     mediaElement = `<img src="${mediaUrl}" alt="${name}" class="nft-image" onerror="this.onerror=null; this.src='${IMAGE_PLACEHOLDER}';">`;
                 }
