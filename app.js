@@ -126,21 +126,14 @@ function createResultsHTML(contracts, collectionsByContract) {
         const badgeInfo = BADGE_INFO[collectionName] || { total: 1, description: "Badge" };
         
         if (!matchingCollection) {
-            const image = getLocalImageUrl(contractObj.name);
-            html += `
-                <div class="collection-header">
-                
-                    <h3 class="collection-name">${collectionName} (Missing NFT) - 0/${badgeInfo.total}</h3>
-                    <p class="collection-address">${contractAddress}</p>
-                </div>
-            `;
-            
+
             missingBadges.push({
                 name: collectionName,
                 count: 0,
                 expected: badgeInfo.total,
                 missing: badgeInfo.total
             });
+            
             continue;
         }
         
@@ -173,8 +166,11 @@ function createResultsHTML(contracts, collectionsByContract) {
         
         html += `
             <div class="collection-header">
-                <h3 class="collection-name">${matchingCollection.token.name} (${matchingCollection.token.symbol}) - ${collectionBadgeCount}/${badgeInfo.total}</h3>
-                <p class="collection-address">${matchingCollection.token.address}</p>
+                <h3 class="collection-name">
+                ${matchingCollection.token.name}
+                ${matchingCollection.token.symbol ? `(${matchingCollection.token.symbol})` : ''} 
+                - ${collectionBadgeCount}/${badgeInfo.total}
+                </h3>
             </div>
         `;
         
@@ -218,6 +214,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                             <div class="nft-details">
                                 <h3 class="nft-name">${name}</h3>
                                 <p><strong>Token ID:</strong> ${instance.id}</p>
+                                <p class="collection-address">${matchingCollection.token.address}</p>
                             </div>
                         </div>
                     </div>
@@ -292,4 +289,5 @@ async function scanAllContracts() {
     } finally {
         toggleLoading(false);
     }
+
 }
