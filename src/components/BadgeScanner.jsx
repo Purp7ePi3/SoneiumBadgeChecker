@@ -37,9 +37,9 @@ const BadgeScanner = ({ contracts }) => {
     };
 
     return (
-        <div className="card shadow-sm">
+        <div className="card glow-border shadow-sm">
             <div className="card-body p-4">
-                <h1 className="mb-4">Check NFT Badges</h1>
+                <h1 className="mb-4 glow-text">Check NFT Badges</h1>
                 
                 <div className="mb-3">
                     <label htmlFor="walletAddress" className="form-label">Wallet Address</label>
@@ -55,7 +55,7 @@ const BadgeScanner = ({ contracts }) => {
                 
                 <div className="mb-4">
                     <button 
-                        className="btn btn-success" 
+                        className="btn btn-primary" 
                         onClick={scanAllContracts}
                         disabled={loading}
                     >
@@ -64,7 +64,7 @@ const BadgeScanner = ({ contracts }) => {
                 </div>
                 
                 {loading && (
-                    <div className="text-center text-primary">
+                    <div className="text-center">
                         <div className="spinner-border me-2" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>

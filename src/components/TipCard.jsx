@@ -12,9 +12,9 @@ const TipCard = ({ showToast }) => {
     };
 
     return (
-        <div className="card shadow-sm mb-4">
+        <div className="card shadow-sm mb-4 glow-border">
             <div className="card-body">
-                <h2 className="card-title h5 mb-3">Tip Me</h2>
+                <h2 className="card-title h5 mb-3 glow-text">Tip Me</h2>
                 <p className="text-muted small mb-3">Support the development of BadgeChecker by sending a tip.</p>
                 <div className="list-group">
                     {TIP_WALLETS.map((wallet, index) => (

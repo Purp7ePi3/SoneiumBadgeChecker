@@ -1,45 +1,90 @@
 :root {
-    --primary-color: #6366f1;
-    --secondary-color: #818cf8;
+    --primary-color: #2563eb;
+    --secondary-color: #3b82f6;
+    --accent-color: #60a5fa;
     --success-color: #10b981;
     --error-color: #ef4444;
+    --dark-blue: #1e3a8a;
+    --light-blue: #93c5fd;
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --card-backgound: #1f2937;
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
     --heading-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
     --body-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
-    --bs-heading-color: #f8f9fa;
-    --bs-body-color: #f8f9fa;
-    --bs-light-rgb: #1f2937;
-    --bs-card-color:#1f2937;
-    --card-backgound: #1f2937;
 }
 
 body {
     font-family: var(--body-font);
-    background-color: #f9fafb;
+    background-color: var(--bg-color) !important;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
 }
 
 /* Header styles */
 .navbar {
-    background-color: #ffffff;
-    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand .logo {
+    font-family: var(--heading-font); /* Usa il font giusto */
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: var(--primary-color) !important;
 }
 
 .logo {
-    font-family: var(--heading-font);
+    font-family: var(--heading-font); /* Usa lo stesso font */
     font-size: 1.75rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--primary-color) !important; /* Colore personalizzato per il logo */
+    text-decoration: none;
 }
+
 
 /* Card customizations */
 .card {
     border-radius: 0.75rem;
-    border: 1px solid #e5e7eb;
+    background-color: var(--card-backgound) !important;
+    border: 1px solid var(--border-color) ;
+    background-color: var(--card-bg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
     overflow: hidden;
 }
 
+.card-body {
+    padding: 1.5rem;
+    color: var(--primary-color) !important;
+}
+
+.card-title {
+    color: var(--light-blue);
+    margin-bottom: 1rem;
+}
+
+.token{
+    color: var(--text-muted);
+}
+
+/* Typography */
 h1, h2, h3, h4 {
     font-family: var(--heading-font);
     line-height: 1.2;
+    color: var(--light-blue);
+}
+
+html body .text-muted {
+    color: var(--text-muted) !important;
 }
 
 /* Button customizations */
@@ -67,11 +112,13 @@ h1, h2, h3, h4 {
 .wallet-item {
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
-    border-left: 3px solid var(--primary-color) !important;
+    border-left: 3px solid var(--accent-color) !important;
+    /* background-color: var(--card-backgound) !important; */
+    color: var(--text-color);
 }
 
 .wallet-item:hover {
-    background-color: #f8f9fa;
+    background-color: var(--dark-blue);
     transform: translateX(3px);
 }
 
@@ -87,26 +134,34 @@ h1, h2, h3, h4 {
 .wallet-label {
     display: inline-block;
     padding: 0.2rem 0.5rem;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
     border-radius: 0.25rem;
     font-size: 0.75rem;
     margin-left: auto;
+    font-weight: bold;
+}
+
+/* List group customizations */
+.list-group-item {
+    background-color: var(--error-color);
+    color: var(--text-color);
+    border-color: var(--border-color);
 }
 
 /* NFT display styles */
 .nft-item {
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-color);
     border-radius: 0.75rem;
     padding: 1rem;
     margin-bottom: 1.5rem;
-    background-color: #ffffff;
+    background-color: var(--bg-color);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .nft-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .nft-header {
@@ -120,7 +175,7 @@ h1, h2, h3, h4 {
     height: 150px;
     object-fit: cover;
     border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nft-details {
@@ -130,36 +185,36 @@ h1, h2, h3, h4 {
 .nft-name {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
-    color: #111827;
+    color: var(--light-blue);
 }
 
 .collection-address {
     font-family: monospace;
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--text-muted);
     word-break: break-all;
 }
 
 /* Badge results styling */
 .badge-summary {
-    background-color: #f3f4f6;
+    background-color: var(--bg-color);
     border-radius: 0.75rem;
     padding: 1.25rem;
     margin-bottom: 2rem;
-    border-left: 4px solid var(--primary-color);
+    border-left: 4px solid var(--accent-color);
 }
 
 .badge-total {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--light-blue);
     margin-bottom: 0.75rem;
 }
 
 .missing-badges {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--border-color);
 }
 
 .badge-list {
@@ -169,7 +224,8 @@ h1, h2, h3, h4 {
 
 .badge-list li {
     padding: 0.5rem 0;
-    border-bottom: 1px dashed #e5e7eb;
+    border-bottom: 1px dashed var(--border-color);
+    color: var(--text-color);
 }
 
 .badge-list li:last-child {
@@ -179,18 +235,37 @@ h1, h2, h3, h4 {
 .collection-header {
     padding-bottom: 1rem;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .collection-name {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #111827;
+    color: var(--light-blue);
+}
+
+/* Form controls */
+.form-control {
+    background-color: var(--bg-color);
+    border-color: var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    background-color: var(--bg-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+    box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.25);
+}
+
+.form-label {
+    color: var(--light-blue);
 }
 
 /* Toast customization */
 .toast {
     border-radius: 0.5rem;
+    background-color: var(--primary-color);
 }
 
 .toast-body {
@@ -199,19 +274,27 @@ h1, h2, h3, h4 {
 
 /* Spinner customization */
 .spinner-border {
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 
-/* Form control customization */
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+/* Alert customization */
+.alert-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fecaca;
+    border-color: rgba(239, 68, 68, 0.5);
 }
 
 /* Footer styling */
 footer {
-    background-color: #ffffff !important;
-    border-top: 1px solid #e5e7eb;
+    background-color: var( --bg-color) !important;
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 0;
+}
+
+.mb-0.text-muted {
+    color: var(--error-color); /* Colore personalizzato per il testo */
+    margin-bottom: 0; /* Impostazione margine inferiore a 0, se non è già impostato */
+    font-style: italic; /* Aggiungi un'altra proprietà per modificarlo ulteriormente */
 }
 
 /* Media queries for responsive design */
@@ -231,45 +314,39 @@ footer {
     }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    body[data-theme="dark"] {
-        background-color: #111827;
-        color: #f9fafb;
-    }
-    
-    body[data-theme="dark"] .card {
-        background-color: #1f2937;
-        border-color: #374151;
-    }
-    
-    body[data-theme="dark"] .navbar {
-        background-color: #1f2937;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    
-    body[data-theme="dark"] .nft-item {
-        background-color: #1f2937;
-        border-color: #374151;
-    }
-    
-    body[data-theme="dark"] .nft-name {
-        color: #f9fafb;
-    }
-    
-    body[data-theme="dark"] .collection-address {
-        color: #9ca3af;
-    }
-    
-    body[data-theme="dark"] .badge-summary {
-        background-color: #374151;
-    }
-    
-    body[data-theme="dark"] .badge-total {
-        color: #f9fafb;
-    }
-    
-    body[data-theme="dark"] .wallet-item:hover {
-        background-color: #2d3748;
-    }
+/* Hide Contract Management */
+#contract-management {
+    display: none;
+}
+
+/* Glowing effects */
+/* .glow-text {
+    text-shadow: 0 0 5px rgba(96, 214, 250, 0.5);
+}
+
+.glow-border {
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.3);
+} */
+
+/* Gradient backgrounds */
+.gradient-header {
+    background: linear-gradient(to right, var(--dark-blue), var(--bg-color));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
 }

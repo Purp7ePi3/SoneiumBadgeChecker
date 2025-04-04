@@ -9,7 +9,9 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "bootstrap": "^5.3.5"
+    "bootstrap": "^5.3.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "browserslist": {
     "production": [

@@ -32,10 +32,13 @@ function App() {
                     {/* Sidebar Column */}
                     <div className="col-lg-4">
                         <div className="position-sticky" style={{ top: '5rem' }}>
-                            <ContractsList 
-                                contracts={contracts} 
-                                setContracts={setContracts} 
-                            />
+                            {/* Contract management is hidden but still functional */}
+                            <div id="contract-management" style={{ display: 'none' }}>
+                                <ContractsList 
+                                    contracts={contracts} 
+                                    setContracts={setContracts} 
+                                />
+                            </div>
                             <TipCard showToast={handleShowToast} />
                             <AboutCard />
                         </div>
@@ -49,7 +52,7 @@ function App() {
                 setShow={setShowToast} 
             />
 
-            <footer className="mt-4 py-3 bg-light">
+            <footer className="mt-4 py-3">
                 <div className="container text-center">
                     <p className="mb-0 text-muted">&copy; 2025 BadgeChecker. Tutti i diritti riservati.</p>
                 </div>
