@@ -31,7 +31,7 @@ const AboutCard = () => {
                     <p className="text-muted small mb-0">
                         Created with ♥ for the Soneium community.
                         <br />
-                        <a href="https://github.com/badgechecker/app" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                        <a href="https://github.com/Purp7ePi3/SoneiumBadgeChecker" target="_blank" rel="noopener noreferrer" className="text-decoration-none">
                             View on GitHub
                         </a>
                     </p>
