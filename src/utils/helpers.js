@@ -33,9 +33,13 @@ export function isVideoFile(url) {
             url.toLowerCase().includes('media.mp4');
 }
 
+// Updated to use public folder for images
 export function getLocalImageUrl(contractName) {
+    if (!contractName) return '/placeholder.jpg';
+    
     const safeFileName = contractName.replace(/[^a-zA-Z0-9]/g, '');
-    return `./${safeFileName}.jpg`;
+    // Using /images/ folder in the public directory
+    return `/images/${safeFileName}.jpg`;
 }
 
 export function isDefaultContract(address) {

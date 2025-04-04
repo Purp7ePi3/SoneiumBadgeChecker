@@ -14,54 +14,66 @@ const Results = ({ contracts, collectionsByContract }) => {
         console.log('Contracts:', contracts);
         console.log('Collections By Contract:', collectionsByContract);
     
+        // Calculate total possible badges
         let totalPossibleBadges = 0;
         for (const badgeName in BADGE_INFO) {
             totalPossibleBadges += BADGE_INFO[badgeName].total;
         }
         setTotalBadgesPossible(totalPossibleBadges);
     
+        // Reset state before calculations
         let totalFound = 0;
         let missingBadgesArray = [];
         let badgesArray = [];
         let foundAnyFlag = false;
     
+        // Process each contract to count badges and identify missing ones
         contracts.forEach(contractObj => {
-            const collection = collectionsByContract[contractObj.address.toLowerCase()];
+            const contractAddress = contractObj.address.toLowerCase();
+            const collection = collectionsByContract[contractAddress];
             const badgeInfo = BADGE_INFO[contractObj.name] || { total: 1, description: "Badge" };
     
-            console.log('Processing contract:', contractObj);
-            console.log('Collection:', collection);
-    
-            if (!collection) {
+            // If collection doesn't exist, it's missing
+            if (!collection || !collection.token_instances || collection.token_instances.length === 0) {
                 missingBadgesArray.push({
                     name: contractObj.name,
                     count: 0,
                     expected: badgeInfo.total,
                     missing: badgeInfo.total
                 });
+                
+                // Still add to badges array with count 0
+                badgesArray.push({
+                    name: contractObj.name,
+                    count: 0,
+                    total: badgeInfo.total
+                });
+                
                 return;
             }
     
+            // Found at least one collection
             foundAnyFlag = true;
-            let collectionBadgeCount = collection.token_instances ? collection.token_instances.length : 0;
+            
+            // Count badges in this collection
+            const collectionBadgeCount = collection.token_instances.length;
             totalFound += collectionBadgeCount;
     
+            // Add to collection badges array
             badgesArray.push({
-                name: collection.token.name,
+                name: collection.token.name || contractObj.name,
                 count: collectionBadgeCount,
                 total: badgeInfo.total
             });
     
+            // If we're missing any badges from this collection
             if (collectionBadgeCount < badgeInfo.total) {
-                const existingBadge = missingBadgesArray.find(badge => badge.name === collection.token.name);
-                if (!existingBadge) {
-                    missingBadgesArray.push({
-                        name: collection.token.name,
-                        count: collectionBadgeCount,
-                        expected: badgeInfo.total,
-                        missing: badgeInfo.total - collectionBadgeCount
-                    });
-                }
+                missingBadgesArray.push({
+                    name: collection.token.name || contractObj.name,
+                    count: collectionBadgeCount,
+                    expected: badgeInfo.total,
+                    missing: badgeInfo.total - collectionBadgeCount
+                });
             }
         });
     
@@ -69,9 +81,11 @@ const Results = ({ contracts, collectionsByContract }) => {
         console.log('Badges By Collection:', badgesArray);
         console.log('Total Badges Found:', totalFound);
     
+        // Update state with the calculated values
         setMissingBadges(missingBadgesArray);
         setBadgesByCollection(badgesArray);
         setTotalBadgesFound(totalFound);
+        setFoundAny(foundAnyFlag);
     
     }, [contracts, collectionsByContract]);
     
@@ -121,44 +135,25 @@ const Results = ({ contracts, collectionsByContract }) => {
         const badgeInfo = BADGE_INFO[collectionName] || { total: 1, description: "Badge" };
 
         if (!collection) {
-            return null;
+            return (
+                <div key={contractAddress} className="mt-4">
+                    <div className="collection-header">
+                        <h3 className="collection-name">
+                            {collectionName} - 0/{badgeInfo.total}
+                        </h3>
+                    </div>
+                    <p className="mb-4 text-muted">No tokens found for this collection.</p>
+                </div>
+            );
         }
 
-        let collectionBadgeCount = 0;
-        if (collection.token_instances && collection.token_instances.length > 0) {
-            collectionBadgeCount = collection.token_instances.length;
-
-            const tokenName = collection.token.name;
-            const expected = badgeInfo.total;
-            const missing = expected - collectionBadgeCount;
-
-            if (missing > 0) {
-                setMissingBadges(prev => [
-                    ...prev,
-                    {
-                        name: tokenName,
-                        count: collectionBadgeCount,
-                        expected: expected,
-                        missing: missing
-                    }
-                ]);
-            }
-
-            setBadgesByCollection(prev => [
-                ...prev,
-                {
-                    name: tokenName,
-                    count: collectionBadgeCount,
-                    total: badgeInfo.total
-                }
-            ]);
-        }
+        const collectionBadgeCount = collection.token_instances ? collection.token_instances.length : 0;
 
         return (
             <div key={contractAddress}>
                 <div className="collection-header mt-4">
                     <h3 className="collection-name">
-                        {collection.token.name}
+                        {collection.token.name || collectionName}
                         {collection.token.symbol ? ` (${collection.token.symbol})` : ''} 
                         - {collectionBadgeCount}/{badgeInfo.total}
                     </h3>
@@ -166,7 +161,7 @@ const Results = ({ contracts, collectionsByContract }) => {
 
                 {collection.token_instances && collection.token_instances.length > 0 ? (
                     collection.token_instances.map((instance, idx) => {
-                        const localImageUrl = getLocalImageUrl(collection.token.name);
+                        const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
                         
                         let mediaUrl;
                         if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
@@ -177,7 +172,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                             mediaUrl = localImageUrl;
                         }
 
-                        const name = instance.metadata?.name || collection.token.name;
+                        const name = instance.metadata?.name || collection.token.name || collectionName;
 
                         return (
                             <div className="nft-item" key={`${contractAddress}-${instance.id}`}>
@@ -195,6 +190,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                                             alt={name} 
                                             className="nft-image" 
                                             onError={(e) => {
+                                                console.log('Image failed to load:', mediaUrl);
                                                 e.target.onerror = null; 
                                                 e.target.src = IMAGE_PLACEHOLDER;
                                                 e.target.alt = 'NFT image placeholder';
