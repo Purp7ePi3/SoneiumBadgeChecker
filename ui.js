@@ -64,6 +64,17 @@ function isVideoFile(url) {
 }
 
 /**
+ * Ottiene l'URL dell'immagine locale basata sul nome del contratto
+ * @param {string} contractName - Nome del contratto 
+ * @returns {string} URL dell'immagine locale
+ */
+function getLocalImageUrl(contractName) {
+    // Strip special characters and spaces for filename safety
+    const safeFileName = contractName.replace(/[^a-zA-Z0-9]/g, '');
+    return `./${safeFileName}.jpg`;
+}
+
+/**
  * Crea il contenuto HTML per i risultati della scansione, includendo il conteggio dei badge
  * e informazioni sui badge mancanti
  * @param {Array} contracts - Lista dei contratti scansionati
@@ -146,10 +157,26 @@ function createResultsHTML(contracts, collectionsByContract) {
         
         if (matchingCollection.token_instances && matchingCollection.token_instances.length > 0) {
             for (const instance of matchingCollection.token_instances) {
-                // Check for animation_url first, then fall back to image_url
-                const mediaUrl = (instance.metadata?.animation_url && instance.metadata.animation_url !== "null" && instance.metadata.animation_url !== null) 
-                    ? instance.metadata.animation_url 
-                    : (instance.image_url || IMAGE_PLACEHOLDER);
+                // Get local image URL based on contract name
+                const localImageUrl = getLocalImageUrl(matchingCollection.token.name);
+                
+                // Check for animation_url first, then fall back to image_url, then local image
+                let mediaUrl;
+                
+                if (instance.metadata?.animation_url && 
+                    instance.metadata.animation_url !== "null" && 
+                    instance.metadata.animation_url !== null) {
+                    // Use animation URL if available
+                    mediaUrl = instance.metadata.animation_url;
+                } else if (instance.image_url && 
+                           instance.image_url !== "null" && 
+                           instance.image_url !== null) {
+                    // Use image URL if available
+                    mediaUrl = instance.image_url;
+                } else {
+                    // Use local image file based on contract name
+                    mediaUrl = localImageUrl;
+                }
                 
                 const name = instance.metadata?.name || matchingCollection.token.name;
                 
@@ -164,7 +191,7 @@ function createResultsHTML(contracts, collectionsByContract) {
                         </div>
                     `;
                 } else {
-                    mediaElement = `<img src="${mediaUrl}" alt="${name}" class="nft-image">`;
+                    mediaElement = `<img src="${mediaUrl}" alt="${name}" class="nft-image" onerror="this.onerror=null; this.src='${IMAGE_PLACEHOLDER}';">`;
                 }
                 
                 html += `
