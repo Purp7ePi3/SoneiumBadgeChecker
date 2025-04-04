@@ -18,9 +18,19 @@ function updateContractsList(contracts) {
     contracts.forEach((contract, index) => {
         const contractDiv = document.createElement('div');
         contractDiv.className = 'contract-item';
+        
+        // Check if this is a default contract or a user-added one
+        const isDefaultContract = DEFAULT_CONTRACTS.some(
+            dc => dc.address.toLowerCase() === contract.address.toLowerCase()
+        );
+        
+        // Only show remove button for user-added contracts
+        const removeButton = isDefaultContract ? '' : 
+            `<span class="contract-remove" onclick="removeContract(${index})">✕</span>`;
+        
         contractDiv.innerHTML = `
             <span class="contract-address">${contract.name}</span>
-            
+            ${removeButton}
         `;
         contractsList.appendChild(contractDiv);
     });
@@ -75,6 +85,14 @@ function getLocalImageUrl(contractName) {
 }
 
 /**
+ * Imposta un wallet predefinito nel campo input
+ * @param {string} walletAddress - Indirizzo del wallet da impostare
+ */
+function setWallet(walletAddress) {
+    document.getElementById('walletAddress').value = walletAddress;
+}
+
+/**
  * Crea il contenuto HTML per i risultati della scansione, includendo il conteggio dei badge
  * e informazioni sui badge mancanti
  * @param {Array} contracts - Lista dei contratti scansionati
@@ -91,7 +109,17 @@ function createResultsHTML(contracts, collectionsByContract) {
     // Define expected badge counts for specific collections
     const expectedBadgeCounts = {
         'Owlto badge': 6,
-        'Orbiter': 2
+        'Orbiter': 2,
+        'Mithraeum: Badge': 1,
+        'OmniHub': 1,
+        'Posse': 1,
+        'OG badge': 1,
+        'NFT2Me': 1,
+        'Sonus': 1,
+        'CoPump': 1,
+        'UneWeb': 1,
+        'KyoFinance': 1,
+        'Sake': 1
     };
     
     for (const contractObj of contracts) {
@@ -227,13 +255,16 @@ function createResultsHTML(contracts, collectionsByContract) {
             `;
         }
         
+        const totalExpected = Object.values(expectedBadgeCounts).reduce((sum, count) => sum + count, 0);
+        const totalMissing = totalExpected - totalBadges;
+        
         html = `
             <div class="badge-summary">
                 <h2>Badge summary</h2>
-                <p class="badge-total">Total Badges: <strong>${totalBadges}</strong></p>
+                <p class="badge-total">Total Badges: <strong>${totalBadges}/${totalExpected}</strong> (missing ${totalMissing})</p>
                 <ul class="badge-list">
                     ${badgesByCollection.map(collection => 
-                        `<li>${collection.name}: ${collection.count} badge</li>`).join('')}
+                        `<li>${collection.name}: ${collection.count} badge${collection.count > 1 ? 's' : ''}</li>`).join('')}
                 </ul>
                 ${missingBadgesHTML}
             </div>
