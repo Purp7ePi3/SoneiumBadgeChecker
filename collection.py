@@ -27,11 +27,12 @@ for address in addresses:
             token = item["token"]
             contract_address = token["address"]
             token_name = token.get("name", "Sconosciuto")
+            symbol = token.get("symbol", "Null")
             amount = int(item.get("amount", 0))
 
             collection_summary[contract_address]["name"] = token_name
             collection_summary[contract_address]["amount"] += amount
-
+            collection_summary[contract_address]["symbol"] = symbol
     except requests.RequestException as e:
         print(f"Errore durante la richiesta per {address}: {e}")
 
@@ -44,4 +45,4 @@ sorted_collections = sorted(
 # Stampa
 print("Collezioni NFT possedute (aggregate per più indirizzi):\n")
 for contract_address, info in sorted_collections:
-    print(f"{contract_address} | {info['amount']}x {info['name']}")
+    print(f'address: "{contract_address}", name: "{info["name"]}" | {info["symbol"]} x {info["amount"]} ')

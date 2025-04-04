@@ -146,7 +146,11 @@ function createResultsHTML(contracts, collectionsByContract) {
         
         if (matchingCollection.token_instances && matchingCollection.token_instances.length > 0) {
             for (const instance of matchingCollection.token_instances) {
-                const mediaUrl = instance.image_url || IMAGE_PLACEHOLDER;
+                // Check for animation_url first, then fall back to image_url
+                const mediaUrl = (instance.metadata?.animation_url && instance.metadata.animation_url !== "null" && instance.metadata.animation_url !== null) 
+                    ? instance.metadata.animation_url 
+                    : (instance.image_url || IMAGE_PLACEHOLDER);
+                
                 const name = instance.metadata?.name || matchingCollection.token.name;
                 
                 let mediaElement;
