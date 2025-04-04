@@ -19,8 +19,8 @@ function updateContractsList(contracts) {
         const contractDiv = document.createElement('div');
         contractDiv.className = 'contract-item';
         contractDiv.innerHTML = `
-            <span class="contract-address">${contract.address}</span>
-            <span class="contract-remove" onclick="removeContract(${index})">Remove</span>
+            <span class="contract-address">${contract.name}</span>
+            
         `;
         contractsList.appendChild(contractDiv);
     });
