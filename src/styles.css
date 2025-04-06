@@ -388,11 +388,22 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 0.5rem;
+    position: relative;
 }
 
 .ad-image {
     max-width: 100%;
     border-radius: 0.5rem;
+}
+
+.fallback-ad {
+    /* Hide fallback image when AdSense is loaded */
+    display: none;
+}
+
+/* Show fallback image when AdSense is blocked or not loaded */
+.adsbygoogle:not([data-adsbygoogle-status="done"]) ~ .fallback-ad {
+    display: block;
 }
 
 .ad-disclaimer {
