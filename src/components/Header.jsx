@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header className="navbar navbar-expand-lg sticky-top">
             <div className="container">
-                <a href="#" className="navbar-brand logo">BadgeChecker</a>
+                <a href="#" className="navbar-brand logo">BadgeChecker Francesco faedi gay</a>
             </div>
         </header>
     );
