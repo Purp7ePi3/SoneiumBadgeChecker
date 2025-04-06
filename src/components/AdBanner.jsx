@@ -29,10 +29,14 @@ const AdBanner = () => {
                             width: '120px',
                             height: '600px'
                         }}
-                        data-ad-client="ca-pub-6225458130613974"
-                        data-ad-slot="9384940508" // Replace with your actual ad slot ID
+                       data-ad-client="ca-pub-6225458130613974"
+                        data-ad-slot="2328021100"
                         data-ad-format="vertical"
                         data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+
                     
                     {/* Fallback image when AdSense is not loaded or blocked */}
                     <img 
