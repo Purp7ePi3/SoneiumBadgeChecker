@@ -30,7 +30,7 @@ const AdBanner = () => {
                             height: '600px'
                         }}
                         data-ad-client="ca-pub-6225458130613974"
-                        data-ad-slot="1234567890" // Replace with your actual ad slot ID
+                        data-ad-slot="9384940508" // Replace with your actual ad slot ID
                         data-ad-format="vertical"
                         data-full-width-responsive="true"></ins>
                     
