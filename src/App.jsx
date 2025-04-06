@@ -4,10 +4,11 @@ import BadgeScanner from './components/BadgeScanner';
 import ContractsList from './components/ContractsList';
 import TipCard from './components/TipCard';
 import AboutCard from './components/AboutCard';
+import AdBanner from './components/AdBanner';
 import Toast from './components/Toast';
 import { DEFAULT_CONTRACTS } from './constants';
 import './styles.css';
-import { Analytics } from '@vercel/analytics/react'; // Importa il componente Analytics
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
     const [contracts, setContracts] = useState([...DEFAULT_CONTRACTS]);
@@ -21,20 +22,24 @@ function App() {
 
     return (
         <>
-            {/* Aggiungi il componente Analytics prima di qualsiasi altro contenuto */}
             <Analytics />
 
             <Header />
             
             <div className="container py-4">
                 <div className="row g-4">
+                    {/* Ad Banner Column */}
+                    <div className="col-lg-2 d-none d-lg-block">
+                        <AdBanner />
+                    </div>
+                    
                     {/* Main Content Column */}
-                    <div className="col-lg-8">
+                    <div className="col-lg-7">
                         <BadgeScanner contracts={contracts} />
                     </div>
 
                     {/* Sidebar Column */}
-                    <div className="col-lg-4">
+                    <div className="col-lg-3">
                         <div className="position-sticky" style={{ top: '5rem' }}>
                             {/* Contract management is hidden but still functional */}
                             <div id="contract-management" style={{ display: 'none' }}>
