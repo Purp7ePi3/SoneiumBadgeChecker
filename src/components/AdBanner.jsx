@@ -4,14 +4,16 @@ const AdBanner = () => {
     const adContainerRef = useRef(null);
 
     useEffect(() => {
-        // This is where you can initialize Google AdSense ads
-        // Only run this if we're in a browser environment and the Google AdSense script is loaded
+        // Only run if window and adsbygoogle exist
         if (typeof window !== 'undefined' && window.adsbygoogle) {
             try {
                 (window.adsbygoogle = window.adsbygoogle || []).push({});
+                console.log('AdSense initialized');
             } catch (error) {
                 console.error('AdSense error:', error);
             }
+        } else {
+            console.log('AdSense not available');
         }
     }, []);
 
@@ -28,7 +30,7 @@ const AdBanner = () => {
                             height: '600px'
                         }}
                         data-ad-client="ca-pub-6225458130613974"
-                        data-ad-slot="your-ad-slot-id" // Replace with your actual ad slot ID
+                        data-ad-slot="1234567890" // Replace with your actual ad slot ID
                         data-ad-format="vertical"
                         data-full-width-responsive="true"></ins>
                     
