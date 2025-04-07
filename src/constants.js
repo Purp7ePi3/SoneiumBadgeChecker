@@ -17,7 +17,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x11B2876C58cFb7501Db60d0112AF8A8EfEB0A81D", name: "KyoFinance"},
     { address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
     { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru"},
-    { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonus"},
+    { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonex Goat"}, // Updated name
 ];
 
 // Badge info with total counts
@@ -26,7 +26,7 @@ export const BADGE_INFO = {
     'Mithraeum: Badge': { total: 1, description: "Mithraeum participation badge" },
     'OmniHub': { total: 1, description: "OmniHub contributor badge" },
     'Posse': { total: 1, description: "Posse membership badge" },
-    'Soneium Badge Collection': { total: 2, description: "Soneium platform badges" },
+    'OG badge': { total: 2, description: "Soneium platform badges" }, // Correctly indicates 2 badges
     'NFT2Me': { total: 1, description: "NFT2Me platform badge" },
     'Sonus': { total: 1, description: "Sonus community badge" },
     'CoPump': { total: 1, description: "CoPump project badge" },
@@ -34,7 +34,7 @@ export const BADGE_INFO = {
     'KyoFinance': { total: 1, description: "KyoFinance community badge" },
     'Sake': { total: 1, description: "Sake protocol badge" },
     'Biru': { total: 1, description: "Beer badge"},
-    'Sonus': { total: 1, description: "Goat"}
+    'Sonex Goat': { total: 1, description: "Goat badge"}
 };
 
 // Wallet addresses for tips

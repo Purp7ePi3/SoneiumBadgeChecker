@@ -31,12 +31,15 @@ const Results = ({ contracts, collectionsByContract }) => {
         contracts.forEach(contractObj => {
             const contractAddress = contractObj.address.toLowerCase();
             const collection = collectionsByContract[contractAddress];
-            const badgeInfo = BADGE_INFO[contractObj.name] || { total: 1, description: "Badge" };
+            
+            // Fix: Ensure the badge name is correctly referenced
+            const badgeName = contractObj.name;
+            const badgeInfo = BADGE_INFO[badgeName] || { total: 1, description: "Badge" };
     
             // If collection doesn't exist, it's missing
             if (!collection || !collection.token_instances || collection.token_instances.length === 0) {
                 missingBadgesArray.push({
-                    name: contractObj.name,
+                    name: badgeName,
                     count: 0,
                     expected: badgeInfo.total,
                     missing: badgeInfo.total
@@ -44,7 +47,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                 
                 // Still add to badges array with count 0
                 badgesArray.push({
-                    name: contractObj.name,
+                    name: badgeName,
                     count: 0,
                     total: badgeInfo.total
                 });
@@ -55,13 +58,16 @@ const Results = ({ contracts, collectionsByContract }) => {
             // Found at least one collection
             foundAnyFlag = true;
             
-           // Count badges in this collection
+            // Count badges in this collection
             const collectionBadgeCount = collection.token_instances.length;
             totalFound += collectionBadgeCount;
 
-            // Add to collection badges array
+            // Add to collection badges array with proper naming
+            // Use the collection name from API if available, otherwise use the contract name
+            const displayName = collection.token.name || badgeName;
+            
             badgesArray.push({
-                name: collection.token.name || contractObj.name,
+                name: displayName,
                 count: collectionBadgeCount,
                 total: badgeInfo.total
             });
@@ -69,7 +75,7 @@ const Results = ({ contracts, collectionsByContract }) => {
             // If we're missing any badges from this collection
             if (collectionBadgeCount < badgeInfo.total) {
                 missingBadgesArray.push({
-                    name: collection.token.name || contractObj.name,
+                    name: displayName,
                     count: collectionBadgeCount,
                     expected: badgeInfo.total,
                     missing: badgeInfo.total - collectionBadgeCount
