@@ -22,18 +22,18 @@ export const DEFAULT_CONTRACTS = [
 
 // Badge info with total counts
 export const BADGE_INFO = {
-    'Owlto badge': { total: 6, description: "Owlto community badges" },
-    'Mithraeum: Badge': { total: 1, description: "Mithraeum participation badge" },
+    'Owlto badge': { total: 6, description: "Owlto community badges" },    // TO MINT
+    'Mithraeum: Badge': { total: 1, description: "Mithraeum participation badge" }, 
     'OmniHub': { total: 1, description: "OmniHub contributor badge" },
     'Posse': { total: 1, description: "Posse membership badge" },
     'OG badge': { total: 2, description: "Soneium platform badges" }, // Correctly indicates 2 badges
     'NFT2Me': { total: 1, description: "NFT2Me platform badge" },
-    'Sonus': { total: 1, description: "Sonus community badge" },
+    'Sonus': { total: 1, description: "Sonus community badge" },    // TO MINT
     'CoPump': { total: 1, description: "CoPump project badge" },
-    'UneWeb': { total: 1, description: "UneWeb contributor badge" },
+    'UneWeb': { total: 1, description: "UneWeb contributor badge" }, // TO MINT
     'KyoFinance': { total: 1, description: "KyoFinance community badge" },
     'Sake': { total: 1, description: "Sake protocol badge" },
-    'Biru': { total: 1, description: "Beer badge"},
+    'Biru': { total: 1, description: "Beer badge"}, // TO MINT
     'Sonex Goat': { total: 1, description: "Goat badge"}
 };
 
