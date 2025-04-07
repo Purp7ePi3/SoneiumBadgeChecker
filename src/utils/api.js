@@ -1,15 +1,25 @@
 import { API_BASE_URL, NFT_TYPES } from '../constants';
 
 // API Functions
-export async function fetchNFTCollections(walletAddress) {
-    const apiUrl = `${API_BASE_URL}/addresses/${walletAddress}/nft/collections?type=${NFT_TYPES}`;
+export async function fetchNFTCollections(walletAddress, types = ["ERC-721", "ERC-404", "ERC-1155"]) {
+    const results = { items: [] };
     
-    const response = await fetch(apiUrl);
-    if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`);
+    for (const type of types) {
+        const apiUrl = `${API_BASE_URL}/addresses/${walletAddress}/nft/collections?type=${type}`;
+        try {
+            const response = await fetch(apiUrl);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.items && data.items.length > 0) {
+                    results.items = [...results.items, ...data.items];
+                }
+            }
+        } catch (error) {
+            console.warn(`Error fetching ${type} collections:`, error);
+        }
     }
     
-    return await response.json();
+    return results;
 }
 
 export async function fetchTokenInfo(contractAddress) {

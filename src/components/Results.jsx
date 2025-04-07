@@ -55,17 +55,17 @@ const Results = ({ contracts, collectionsByContract }) => {
             // Found at least one collection
             foundAnyFlag = true;
             
-            // Count badges in this collection
+           // Count badges in this collection
             const collectionBadgeCount = collection.token_instances.length;
             totalFound += collectionBadgeCount;
-    
+
             // Add to collection badges array
             badgesArray.push({
                 name: collection.token.name || contractObj.name,
                 count: collectionBadgeCount,
                 total: badgeInfo.total
             });
-    
+            
             // If we're missing any badges from this collection
             if (collectionBadgeCount < badgeInfo.total) {
                 missingBadgesArray.push({

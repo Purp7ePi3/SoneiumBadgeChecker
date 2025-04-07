@@ -26,7 +26,7 @@ export const BADGE_INFO = {
     'Mithraeum: Badge': { total: 1, description: "Mithraeum participation badge" },
     'OmniHub': { total: 1, description: "OmniHub contributor badge" },
     'Posse': { total: 1, description: "Posse membership badge" },
-    'OG badge': { total: 2, description: "Original supporter badge" },
+    'Soneium Badge Collection': { total: 2, description: "Soneium platform badges" },
     'NFT2Me': { total: 1, description: "NFT2Me platform badge" },
     'Sonus': { total: 1, description: "Sonus community badge" },
     'CoPump': { total: 1, description: "CoPump project badge" },
