@@ -32,7 +32,9 @@ export const BADGE_INFO = {
     'CoPump': { total: 1, description: "CoPump project badge" },
     'UneWeb': { total: 1, description: "UneWeb contributor badge" },
     'KyoFinance': { total: 1, description: "KyoFinance community badge" },
-    'Sake': { total: 1, description: "Sake protocol badge" }
+    'Sake': { total: 1, description: "Sake protocol badge" },
+    'Biru': { total: 1, description: "Beer badge"},
+    'Sonus': { total: 1, description: "Goat"}
 };
 
 // Wallet addresses for tips
