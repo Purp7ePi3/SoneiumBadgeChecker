@@ -16,7 +16,8 @@ export const DEFAULT_CONTRACTS = [
     { address: "0xCA707D22E248740aDaA9C63580F7A35201B18d30", name: "UneWeb"},
     { address: "0x11B2876C58cFb7501Db60d0112AF8A8EfEB0A81D", name: "KyoFinance"},
     { address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
-    { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru"}
+    { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru"},
+    { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonus"},
 ];
 
 // Badge info with total counts
