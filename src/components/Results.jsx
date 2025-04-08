@@ -173,33 +173,54 @@ const Results = ({ contracts, collectionsByContract }) => {
                         const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
 
                         let mediaUrl;
-                        // Try remote URL
+                        // Try to determine the best media URL with better IPFS handling
                         if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
-                        // Replace Pinata con dweb.link se necessario
-                        if (instance.image_url.includes('gateway.pinata.cloud/ipfs/')) {
-                            const cid = instance.image_url.split('gateway.pinata.cloud/ipfs/')[1];
-                            mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                        } else {
-                            mediaUrl = instance.image_url;
-                        }
+                            // Handle IPFS URLs in different formats
+                            if (instance.image_url.includes('ipfs://')) {
+                                const cid = instance.image_url.replace('ipfs://', '');
+                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            } else if (instance.image_url.includes('gateway.pinata.cloud/ipfs/')) {
+                                const cid = instance.image_url.split('gateway.pinata.cloud/ipfs/')[1];
+                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            } else if (instance.image_url.includes('ipfs.io/ipfs/')) {
+                                // Use an alternative gateway since ipfs.io seems to be failing
+                                const cid = instance.image_url.split('ipfs.io/ipfs/')[1];
+                                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
+                            } else {
+                                mediaUrl = instance.image_url;
+                            }
                         } else if (instance.metadata?.animation_url && 
                                 instance.metadata.animation_url !== "null" && 
                                 instance.metadata.animation_url !== null) {
-                        mediaUrl = instance.metadata.animation_url;
+                            // Handle animation URLs with IPFS formats
+                            if (instance.metadata.animation_url.includes('ipfs://')) {
+                                const cid = instance.metadata.animation_url.replace('ipfs://', '');
+                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            } else {
+                                mediaUrl = instance.metadata.animation_url;
+                            }
                         } else if (instance.metadata?.image && 
                                 instance.metadata.image !== "null" && 
                                 instance.metadata.image !== null) {
-                        // Check anche metadata.image e converti se è un URL Pinata
-                        if (instance.metadata.image.includes('gateway.pinata.cloud/ipfs/')) {
-                            const cid = instance.metadata.image.split('gateway.pinata.cloud/ipfs/')[1];
-                            mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            // Handle image URLs from metadata with IPFS formats
+                            if (instance.metadata.image.includes('ipfs://')) {
+                                const cid = instance.metadata.image.replace('ipfs://', '');
+                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            } else if (instance.metadata.image.includes('gateway.pinata.cloud/ipfs/')) {
+                                const cid = instance.metadata.image.split('gateway.pinata.cloud/ipfs/')[1];
+                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                            } else if (instance.metadata.image.includes('ipfs.io/ipfs/')) {
+                                // Use an alternative gateway
+                                const cid = instance.metadata.image.split('ipfs.io/ipfs/')[1]; 
+                                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
+                            } else {
+                                mediaUrl = instance.metadata.image;
+                            }
                         } else {
-                            mediaUrl = instance.metadata.image;
+                            // Immediately use local image if no remote URLs are found
+                            mediaUrl = localImageUrl || IMAGE_PLACEHOLDER;
                         }
-                    } else {
-                        mediaUrl = localImageUrl;
-                    }
-                    
+                                            
                         const name = instance.metadata?.name || collection.token.name || collectionName;
 
                         return (
@@ -220,15 +241,17 @@ const Results = ({ contracts, collectionsByContract }) => {
                                             onError={(e) => {
                                                 console.log('Image failed to load:', mediaUrl);
                                                 e.target.onerror = null; 
-                                                // Try loading from local files first
-                                                const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
-                                                if (localImageUrl) {
-                                                    e.target.src = localImageUrl;
-                                                    e.target.alt = name;
+                                                
+                                                // Try to load from local files based on collection name
+                                                const collectionIdentifier = collection.token.name || collectionName;
+                                                const localFallbackUrl = getLocalImageUrl(collectionIdentifier);
+                                                console.log(localFallbackUrl)
+                                                if (localFallbackUrl) {
+                                                    console.log('Trying local image:', localFallbackUrl);
+                                                    e.target.src = localFallbackUrl;
                                                 } else {
-                                                    // If local image not available, use placeholder
+                                                    console.log('Using placeholder image');
                                                     e.target.src = IMAGE_PLACEHOLDER;
-                                                    e.target.alt = 'NFT image placeholder';
                                                 }
                                             }}
                                         />
