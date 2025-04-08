@@ -220,8 +220,16 @@ const Results = ({ contracts, collectionsByContract }) => {
                                             onError={(e) => {
                                                 console.log('Image failed to load:', mediaUrl);
                                                 e.target.onerror = null; 
-                                                e.target.src = IMAGE_PLACEHOLDER;
-                                                e.target.alt = 'NFT image placeholder';
+                                                // Try loading from local files first
+                                                const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
+                                                if (localImageUrl) {
+                                                    e.target.src = localImageUrl;
+                                                    e.target.alt = name;
+                                                } else {
+                                                    // If local image not available, use placeholder
+                                                    e.target.src = IMAGE_PLACEHOLDER;
+                                                    e.target.alt = 'NFT image placeholder';
+                                                }
                                             }}
                                         />
                                     )}
