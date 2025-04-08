@@ -4,7 +4,7 @@ export const NFT_TYPES = "ERC-721%2CERC-404%2CERC-1155";
 export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 
 // Default contracts to check (alphabetically sorted by name)
-export const unsortedContracts = [
+export const DEFAULT_CONTRACTS = [
     { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru" },
     { address: "0x38bD4363b7Cd4040fAC6EEa5eF5d38E934AebD65", name: "CoPump" },
     { address: "0x7A475a650a4867577cf488E94ec023E593997fd6", name: "coNFT" },
@@ -24,12 +24,9 @@ export const unsortedContracts = [
     { address: "0x690B97980877b5d7915E89E6D0Cb9748A8bdAB8d", name: "Xstar" },
 ];
 
-export const DEFAULT_CONTRACTS = [...unsortedContracts].sort((a, b) => 
-    a.name.localeCompare(b.name)
-);
 
 // Badge info with total counts
-export const BADGE_INFO = {
+export const unsortedContracts = {
     'Owlto badge': { total: 6, description: "Owlto community badges" },    // TO MINT
     'Mithraeum: Badge': { total: 1, description: "Mithraeum participation badge" }, 
     'OmniHub': { total: 1, description: "OmniHub contributor badge" },
