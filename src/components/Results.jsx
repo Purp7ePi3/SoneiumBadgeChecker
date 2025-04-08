@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BADGE_INFO } from '../constants';
+import { BADGE_INFO, DEFAULT_CONTRACTS } from '../constants';
 import { isVideoFile, getLocalImageUrl } from '../utils/helpers';
 import { IMAGE_PLACEHOLDER } from '../constants';
 
@@ -42,16 +42,17 @@ const Results = ({ contracts, collectionsByContract }) => {
                     name: badgeName,
                     count: 0,
                     expected: badgeInfo.total,
-                    missing: badgeInfo.total
+                    missing: badgeInfo.total,
+                    addy: contractAddress
                 });
-                
+
                 // Still add to badges array with count 0
                 badgesArray.push({
                     name: badgeName,
                     count: 0,
-                    total: badgeInfo.total
+                    total: badgeInfo.total,
+                    addy: contractAddress
                 });
-                
                 return;
             }
     
@@ -69,7 +70,8 @@ const Results = ({ contracts, collectionsByContract }) => {
             badgesArray.push({
                 name: displayName,
                 count: collectionBadgeCount,
-                total: badgeInfo.total
+                total: badgeInfo.total,
+                addy: contractAddress
             });
             
             // If we're missing any badges from this collection
@@ -78,14 +80,15 @@ const Results = ({ contracts, collectionsByContract }) => {
                     name: displayName,
                     count: collectionBadgeCount,
                     expected: badgeInfo.total,
-                    missing: badgeInfo.total - collectionBadgeCount
+                    missing: badgeInfo.total - collectionBadgeCount,
+                    addy: contractAddress
                 });
             }
         });
     
-        console.log('Missing Badges:', missingBadgesArray);
-        console.log('Badges By Collection:', badgesArray);
-        console.log('Total Badges Found:', totalFound);
+        // console.log('Missing Badges:', missingBadgesArray);
+        // console.log('Badges By Collection:', badgesArray);
+        // console.log('Total Badges Found:', totalFound);
     
         // Update state with the calculated values
         setMissingBadges(missingBadgesArray);
@@ -98,14 +101,14 @@ const Results = ({ contracts, collectionsByContract }) => {
 
     const MissingBadgesSection = () => {
         if (missingBadges.length === 0) return null;
-
         return (
             <div className="missing-badges">
                 <h3>Missing Badges:</h3>
                 <ul className="badge-list">
                     {missingBadges.map((badge, index) => (
                         <li key={index}>
-                            {badge.name}: {badge.count}/{badge.expected} (missing {badge.missing})
+                            {badge.name}: {badge.count}/{badge.expected} (missing {badge.missing}) 
+                            {/* {badge.addy} */}
                         </li>
                     ))}
                 </ul>
