@@ -18,6 +18,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
     { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru"},
     { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonex Goat"}, // Updated name
+    { address: "0x2DCD9B33F0721000Dc1F8f84B804d4CFA23d7713", name: "velodrome"},
 ];
 
 // Badge info with total counts
@@ -34,7 +35,8 @@ export const BADGE_INFO = {
     'KyoFinance': { total: 1, description: "KyoFinance community badge" },
     'Sake': { total: 1, description: "Sake protocol badge" },
     'Biru': { total: 1, description: "Beer badge"}, // TO MINT
-    'Sonex Goat': { total: 1, description: "Goat badge"}
+    'Sonex Goat': { total: 1, description: "Goat badge"},
+    'Velodrome': { total: 1, description: "Velodrome"}
 };
 
 // Wallet addresses for tips
