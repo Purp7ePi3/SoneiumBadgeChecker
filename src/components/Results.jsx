@@ -168,7 +168,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                 {collection.token_instances && collection.token_instances.length > 0 ? (
                     collection.token_instances.map((instance, idx) => {
                         const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
-                        
+                        console.log(localImageUrl);
                         let mediaUrl;
                         if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
                             mediaUrl = instance.image_url;
