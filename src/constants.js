@@ -3,6 +3,22 @@ export const API_BASE_URL = "https://soneium.blockscout.com/api/v2";
 export const NFT_TYPES = "ERC-721%2CERC-404%2CERC-1155";
 export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 
+
+// Mithraeum: Badge
+// OmniHub
+// Posse
+// OG badge
+// Owlto badge
+// NFT2Me
+// Sonus
+// CoPump
+// UneWeb
+// KyoFinance
+// Sake
+// Biru
+// Sonex
+// Velodrome
+
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
     { address: "0x9d83A657581A966aDf1c346dAfEE3EBe258EC26D", name: "Mithraeum: Badge" },
@@ -18,7 +34,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
     { address: "0x44EEfAC1D5Db283B2dD99e226B864da271D82952", name: "Biru"},
     { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonex Goat"}, // Updated name
-    { address: "0x2DCD9B33F0721000Dc1F8f84B804d4CFA23d7713", name: "velodrome"},
+    { address: "0x2DCD9B33F0721000Dc1F8f84B804d4CFA23d7713", name: "Velodrome"},
 ];
 
 // Badge info with total counts
@@ -41,7 +57,7 @@ export const BADGE_INFO = {
 
 // Wallet addresses for tips
 export const TIP_WALLETS = [
-    { address: "0xc46bd9e23f603f2d7f3c46cdd0267caaffadf35e0cdde156c3328a4a3dd9d642", label: "SUI" },
-    { address: "GRZFYyigEh4tXnLnpRodK2bnGbUp46AWJnEJNy3HNN1v", label: "Solana" },
-    { address: "0x2C4554946fb9082f27585e9e147e19E86166C343", label: "Ethereum" }
+    { address: "0x41e7f0775465e17e12a733ec07083667bce4848e933f28ef0a773934a9903f85", label: "SUI" },
+    { address: "5x8FTzLeyYso7t94roxgEKTMcQ6RV7rQBS6NgdtkoXt9", label: "Solana" },
+    { address: "0xB23Ceba783956603CE63f1Bf52636e36b8a516C3", label: "Ethereum" }
 ];
