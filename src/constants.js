@@ -18,6 +18,7 @@ export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 // Biru
 // Sonex
 // Velodrome
+// Xstar
 
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
