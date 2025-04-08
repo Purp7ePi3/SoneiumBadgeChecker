@@ -21,6 +21,7 @@ export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 // Xstar
 // coNFT
 // SuperVol
+// Arkada
 
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
@@ -41,6 +42,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x690B97980877b5d7915E89E6D0Cb9748A8bdAB8d", name: "Xstar"},
     { address: "0x7A475a650a4867577cf488E94ec023E593997fd6", name: "coNFT"},
     { address: "0x55E906C6Fb98894f05E1a7A533d77732B79a5414", name: "SuperVol"},
+    { address: "0x391Dece93d18Fca922bF337C25Ee38BeA74Db63E", name: "Arkada"},
 ];
 
 // Badge info with total counts
@@ -62,7 +64,7 @@ export const BADGE_INFO = {
     'Xstar': { total: 1, description: "Xstar"},
     'coNFT': { total: 1, description: "coNFT"},
     'SuperVol': { total: 1, description: "SuperVol"},
-
+    'Arkada': { total: 1, description: "Arkada"},
 };
 
 // Wallet addresses for tips
