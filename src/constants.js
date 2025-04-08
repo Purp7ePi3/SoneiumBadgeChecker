@@ -19,6 +19,8 @@ export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 // Sonex
 // Velodrome
 // Xstar
+// coNFT
+// SuperVol
 
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
@@ -37,6 +39,8 @@ export const DEFAULT_CONTRACTS = [
     { address: "0xAa6c38A85e5781bCc410693B52F64EfF1aFcd3c6", name: "Sonex Goat"}, // Updated name
     { address: "0x2DCD9B33F0721000Dc1F8f84B804d4CFA23d7713", name: "Velodrome"},
     { address: "0x690B97980877b5d7915E89E6D0Cb9748A8bdAB8d", name: "Xstar"},
+    { address: "0x7A475a650a4867577cf488E94ec023E593997fd6", name: "coNFT"},
+    { address: "0x55E906C6Fb98894f05E1a7A533d77732B79a5414", name: "SuperVol"},
 ];
 
 // Badge info with total counts
@@ -56,6 +60,9 @@ export const BADGE_INFO = {
     'Sonex Goat': { total: 1, description: "Goat badge"},
     'Velodrome': { total: 1, description: "Velodrome"},
     'Xstar': { total: 1, description: "Xstar"},
+    'coNFT': { total: 1, description: "coNFT"},
+    'SuperVol': { total: 1, description: "SuperVol"},
+
 };
 
 // Wallet addresses for tips
