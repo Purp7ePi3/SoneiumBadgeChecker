@@ -168,25 +168,35 @@ const Results = ({ contracts, collectionsByContract }) => {
                 {collection.token_instances && collection.token_instances.length > 0 ? (
                     collection.token_instances.map((instance, idx) => {
                         const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
-                        console.log(localImageUrl);
-                        let mediaUrl;
-                        if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
-                            // Check if this is an IPFS URL and make sure it's complete
-                            if (instance.image_url.includes('ipfs') && !instance.image_url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
-                                // Add file extension if missing (optional - many IPFS gateways handle this fine)
-                                mediaUrl = `${localImageUrl}`;  // Assuming PNG as default
-                            } else {
-                                mediaUrl = instance.image_url;
-                            }
-                        } else if (instance.metadata?.animation_url && instance.metadata.animation_url !== "null") {
-                            mediaUrl = instance.metadata.animation_url;
-                        } else if (instance.metadata?.image && instance.metadata.image !== "null") {
-                            // Also check metadata.image which is often available
-                            mediaUrl = instance.metadata.image;
-                        } else {
-                            mediaUrl = localImageUrl;
-                        }
 
+                        let mediaUrl;
+                        // Try remote URL
+                        if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
+                        // Replace Pinata con dweb.link se necessario
+                        if (instance.image_url.includes('gateway.pinata.cloud/ipfs/')) {
+                            const cid = instance.image_url.split('gateway.pinata.cloud/ipfs/')[1];
+                            mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                        } else {
+                            mediaUrl = instance.image_url;
+                        }
+                        } else if (instance.metadata?.animation_url && 
+                                instance.metadata.animation_url !== "null" && 
+                                instance.metadata.animation_url !== null) {
+                        mediaUrl = instance.metadata.animation_url;
+                        } else if (instance.metadata?.image && 
+                                instance.metadata.image !== "null" && 
+                                instance.metadata.image !== null) {
+                        // Check anche metadata.image e converti se è un URL Pinata
+                        if (instance.metadata.image.includes('gateway.pinata.cloud/ipfs/')) {
+                            const cid = instance.metadata.image.split('gateway.pinata.cloud/ipfs/')[1];
+                            mediaUrl = `https://dweb.link/ipfs/${cid}`;
+                        } else {
+                            mediaUrl = instance.metadata.image;
+                        }
+                    } else {
+                        mediaUrl = localImageUrl;
+                    }
+                    
                         const name = instance.metadata?.name || collection.token.name || collectionName;
 
                         return (
