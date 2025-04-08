@@ -9,6 +9,8 @@ import { DEFAULT_CONTRACTS } from './constants';
 import './styles.css';
 import { Analytics } from '@vercel/analytics/react'; // Importa il componente Analytics
 
+
+
 function App() {
     const [contracts, setContracts] = useState([...DEFAULT_CONTRACTS]);
     const [toastMessage, setToastMessage] = useState('');
