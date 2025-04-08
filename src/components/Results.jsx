@@ -171,9 +171,18 @@ const Results = ({ contracts, collectionsByContract }) => {
                         console.log(localImageUrl);
                         let mediaUrl;
                         if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
-                            mediaUrl = instance.image_url;
-                        } else if (instance.metadata?.animation_url && instance.metadata.animation_url !== "null" && instance.metadata.animation_url !== null) {
+                            // Check if this is an IPFS URL and make sure it's complete
+                            if (instance.image_url.includes('ipfs') && !instance.image_url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+                                // Add file extension if missing (optional - many IPFS gateways handle this fine)
+                                mediaUrl = `${localImageUrl}`;  // Assuming PNG as default
+                            } else {
+                                mediaUrl = instance.image_url;
+                            }
+                        } else if (instance.metadata?.animation_url && instance.metadata.animation_url !== "null") {
                             mediaUrl = instance.metadata.animation_url;
+                        } else if (instance.metadata?.image && instance.metadata.image !== "null") {
+                            // Also check metadata.image which is often available
+                            mediaUrl = instance.metadata.image;
                         } else {
                             mediaUrl = localImageUrl;
                         }
