@@ -11,8 +11,8 @@ const Results = ({ contracts, collectionsByContract }) => {
     const [totalBadgesPossible, setTotalBadgesPossible] = useState(0);
 
     useEffect(() => {
-        // console.log('Contracts:', contracts);
-        // console.log('Collections By Contract:', collectionsByContract);
+         console.log('Contracts:', contracts);
+         console.log('Collections By Contract:', collectionsByContract);
     
         // Calculate total possible badges
         let totalPossibleBadges = 0;
@@ -86,9 +86,9 @@ const Results = ({ contracts, collectionsByContract }) => {
             }
         });
     
-        // console.log('Missing Badges:', missingBadgesArray);
-        // console.log('Badges By Collection:', badgesArray);
-        // console.log('Total Badges Found:', totalFound);
+        console.log('Missing Badges:', missingBadgesArray);
+    console.log('Badges By Collection:', badgesArray);
+    console.log('Total Badges Found:', totalFound);
     
         // Update state with the calculated values
         setMissingBadges(missingBadgesArray);
@@ -239,18 +239,16 @@ const Results = ({ contracts, collectionsByContract }) => {
                                             alt={name} 
                                             className="nft-image" 
                                             onError={(e) => {
-                                                //console.log('Image failed to load:', mediaUrl);
+                                                console.log('Image failed to load:', mediaUrl);
                                                 e.target.onerror = null; 
                                                 
                                                 // Try to load from local files based on collection name
                                                 const collectionIdentifier = collection.token.name || collectionName;
-                                                const localFallbackUrl = getLocalImageUrl(collectionIdentifier);
-                                                //console.log(localFallbackUrl)
                                                 if (localFallbackUrl) {
-                                                    //console.log('Trying local image:', localFallbackUrl);
+                                                    console.log('Trying local image:', localFallbackUrl);
                                                     e.target.src = localFallbackUrl;
                                                 } else {
-                                                    //console.log('Using placeholder image');
+                                                    console.log('Using placeholder image');
                                                     e.target.src = IMAGE_PLACEHOLDER;
                                                 }
                                             }}
