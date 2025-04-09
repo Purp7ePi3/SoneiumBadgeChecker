@@ -25,6 +25,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x7A475a650a4867577cf488E94ec023E593997fd6", name: "coNFT"},
     { address: "0x55E906C6Fb98894f05E1a7A533d77732B79a5414", name: "SuperVol"},
     { address: "0x391Dece93d18Fca922bF337C25Ee38BeA74Db63E", name: "Arkada"},
+    { address: "0x9a4cC369A91AE5e8cBd99163a2eAC5b7957879dB", name: "Arcas"},
 ];
 
 // Badge info with total counts
@@ -49,6 +50,7 @@ export const BADGE_INFO = {
     'Arkada': { total: 1, description: "Arkada"},
     '2P2E': { total: 1, description: "2P2E"},
     'WaveX': { total: 1, description: "WaveX"},
+    'Arcas': { total: 1, description: "Arcas"},
 };
 
 // Wallet addresses for tips
