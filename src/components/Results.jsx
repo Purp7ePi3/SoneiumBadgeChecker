@@ -11,9 +11,33 @@ const Results = ({ contracts, collectionsByContract }) => {
     const [totalBadgesPossible, setTotalBadgesPossible] = useState(0);
 
     useEffect(() => {
-        console.log('Contracts:', contracts);
-        console.log('Collections By Contract:', collectionsByContract);
+        // console.log('Contracts to scan:', contracts);
     
+        // Debug log all keys in the collectionsByContract
+        // console.log('All collection keys:', Object.keys(collectionsByContract));
+        
+        // Check each contract with detailed logging
+        contracts.forEach(contract => {
+            const contractAddressLower = contract.address.toLowerCase();
+            const contractFound = collectionsByContract[contractAddressLower];
+            
+            // console.log(`Contract Check - ${contract.name}:`);
+            // console.log(`  Address: ${contract.address}`);
+            // console.log(`  Lowercase: ${contractAddressLower}`);
+            // console.log(`  Found: ${contractFound ? 'YES' : 'NO'}`);
+            
+            // If not found, let's check if it exists with different casing
+            if (!contractFound) {
+                const potentialMatch = Object.keys(collectionsByContract).find(
+                    key => key.toLowerCase() === contractAddressLower.toLowerCase()
+                );
+                
+                if (potentialMatch) {
+                    console.log(`  Found with different casing: ${potentialMatch}`);
+                }
+            }
+        });
+            
         // Calculate total possible badges
         let totalPossibleBadges = 0;
         for (const badgeName in BADGE_INFO) {
