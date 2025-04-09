@@ -3,26 +3,6 @@ export const API_BASE_URL = "https://soneium.blockscout.com/api/v2";
 export const NFT_TYPES = "ERC-721%2CERC-404%2CERC-1155";
 export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 
-
-// Mithraeum: Badge
-// OmniHub
-// Posse
-// OG badge
-// Owlto badge
-// NFT2Me
-// Sonus
-// CoPump
-// UneWeb
-// KyoFinance
-// Sake
-// Biru
-// Sonex
-// Velodrome
-// Xstar
-// coNFT
-// SuperVol
-// Arkada
-
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
     { address: "0x9d83A657581A966aDf1c346dAfEE3EBe258EC26D", name: "Mithraeum: Badge" },
@@ -43,6 +23,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x7A475a650a4867577cf488E94ec023E593997fd6", name: "coNFT"},
     { address: "0x55E906C6Fb98894f05E1a7A533d77732B79a5414", name: "SuperVol"},
     { address: "0x391Dece93d18Fca922bF337C25Ee38BeA74Db63E", name: "Arkada"},
+    { address: "0x8918531fC73f2c9047f0163eA126EeD1B8EA2c63", name: "2P2E"},
 ];
 
 // Badge info with total counts
@@ -65,6 +46,7 @@ export const BADGE_INFO = {
     'coNFT': { total: 1, description: "coNFT"},
     'SuperVol': { total: 1, description: "SuperVol"},
     'Arkada': { total: 1, description: "Arkada"},
+    '2P2E': { total: 1, description: "2P2E"},
 };
 
 // Wallet addresses for tips

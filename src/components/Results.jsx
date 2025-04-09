@@ -110,9 +110,9 @@ const Results = ({ contracts, collectionsByContract }) => {
             }
         });
     
-        console.log('Missing Badges:', missingBadgesArray);
-        console.log('Badges By Collection:', badgesArray);
-        console.log('Total Badges Found:', totalFound);
+        // console.log('Missing Badges:', missingBadgesArray);
+        // console.log('Badges By Collection:', badgesArray);
+        // console.log('Total Badges Found:', totalFound);
     
         // Update state with the calculated values
         setMissingBadges(missingBadgesArray);
