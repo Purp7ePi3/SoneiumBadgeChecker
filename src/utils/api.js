@@ -10,16 +10,16 @@ export async function fetchNFTCollections(walletAddress, types = ["ERC-721", "ER
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const data = await response.json();
-                if (type === "ERC-721") {
-                    // Log all contract addresses for ERC-721 collections
-                    if (data.items && data.items.length > 0) {
-                        data.items.forEach(item => {
-                            if (item.token && item.token.address) {
-                                console.log("ERC-721 Contract:", item.token.address);
-                            }
-                        });
-                    }
-                }
+                // if (type === "ERC-721") {
+                //     // Log all contract addresses for ERC-721 collections
+                //     if (data.items && data.items.length > 0) {
+                //         data.items.forEach(item => {
+                //             if (item.token && item.token.address) {
+                //                 console.log("ERC-721 Contract:", item.token.address);
+                //             }
+                //         });
+                //     }
+                // }
                 if (data.items && data.items.length > 0) {
                     results.items = [...results.items, ...data.items];
                 }
