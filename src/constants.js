@@ -49,7 +49,6 @@ export const BADGE_INFO = {
     'Arkada': { total: 1, description: "Arkada"},
     '2P2E': { total: 1, description: "2P2E"},
     'WaveX': { total: 1, description: "WaveX"},
-    'coPump;'
 };
 
 // Wallet addresses for tips
