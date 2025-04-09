@@ -5,6 +5,7 @@ export const IMAGE_PLACEHOLDER = "/api/placeholder/200/200";
 
 // Default contracts to check
 export const DEFAULT_CONTRACTS = [
+    { address: "0x4a3b67b339c272fAb639B0CAF3Ce7852B2Aa0833", name: "WaveX"},
     { address: "0x8918531fC73f2c9047f0163eA126EeD1B8EA2c63", name: "2P2E"},
     { address: "0x9d83A657581A966aDf1c346dAfEE3EBe258EC26D", name: "Mithraeum: Badge" },
     { address: "0x7e058E9eeb81758F80049d0F2c1C1A7b47919697", name: "OmniHub" },
@@ -13,7 +14,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x1eC6AACC79f3c4817d7fea2268e1c54C6b2662Fb", name: "Owlto badge"},
     { address: "0x4591D540B692CBeD60Db7781B7683910f7a3BF8C", name: "NFT2Me"},
     { address: "0x066ABA7c3520e300113C0515FF41c084eE0c95Ea", name: "Sonus"},
-    { address: "0x38bD4363b7Cd4040fAC6EEa5eF5d38E934AebD65", name: "CoPump"},
+    { address: "0x39C5DfF4e39779492C3AE3898c8d5a0579fE684e", name: "CoPump"},
     { address: "0xCA707D22E248740aDaA9C63580F7A35201B18d30", name: "UneWeb"},
     { address: "0x11B2876C58cFb7501Db60d0112AF8A8EfEB0A81D", name: "KyoFinance"},
     { address: "0x3a634e6f8C2bf2C5894722B908d99e3cF9C62eD3", name: "Sake"},
@@ -47,6 +48,8 @@ export const BADGE_INFO = {
     'SuperVol': { total: 1, description: "SuperVol"},
     'Arkada': { total: 1, description: "Arkada"},
     '2P2E': { total: 1, description: "2P2E"},
+    'WaveX': { total: 1, description: "WaveX"},
+    'coPump;'
 };
 
 // Wallet addresses for tips
