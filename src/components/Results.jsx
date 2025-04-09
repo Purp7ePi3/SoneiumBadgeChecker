@@ -263,7 +263,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                                             alt={name} 
                                             className="nft-image" 
                                             onError={(e) => {
-                                                console.log('Image failed to load:', mediaUrl);
+                                                // console.log('Image failed to load:', mediaUrl);
                                                 e.target.onerror = null; 
                                                 
                                                 // Try to load from local files based on collection name
