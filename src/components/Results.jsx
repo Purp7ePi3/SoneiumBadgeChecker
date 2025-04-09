@@ -131,8 +131,7 @@ const Results = ({ contracts, collectionsByContract }) => {
                 <ul className="badge-list">
                     {missingBadges.map((badge, index) => (
                         <li key={index}>
-                            {badge.name}: {badge.count}/{badge.expected} (missing {badge.missing}) 
-                            {/* {badge.addy} */}
+                            {badge.name}: {badge.count}/{badge.expected} - {badge.addy}
                         </li>
                     ))}
                 </ul>
