@@ -5,12 +5,12 @@ export async function fetchNFTCollections(walletAddress, types = ["ERC-721", "ER
     const results = { items: [] };
     
     for (const type of types) {
-        const apiUrl = `${API_BASE_URL}/addresses/${walletAddress}/nft/collections?type=${type}`;
+        const apiUrl = `${API_BASE_URL}/addresses/${walletAddress}/token-transfers?type=${type}`;
         try {
             const response = await fetch(apiUrl);
             if (response.ok) {
                 const data = await response.json();
-                // if (type === "ERC-721") {
+                // if (type === "ERC-1155") {
                 //     // Log all contract addresses for ERC-721 collections
                 //     if (data.items && data.items.length > 0) {
                 //         data.items.forEach(item => {
@@ -49,19 +49,74 @@ export async function fetchTokenInfo(contractAddress) {
     }
 }
 
-export function organizeCollectionsByContract(collectionsData) {
-    if (!collectionsData.items || collectionsData.items.length === 0) {
-        return {};
+// Modify your organizeCollectionsByContract function in api.js
+
+export const organizeCollectionsByContract = (collections) => {
+    const organized = {};
+    const seen = new Set(); // ✅ nuova struttura per deduplicazione globale
+
+    const process = (collection) => processCollection(collection, organized, seen);
+
+    if (Array.isArray(collections)) {
+        collections.forEach(process);
+    } else if (collections?.items && Array.isArray(collections.items)) {
+        collections.items.forEach(process);
+    } else if (collections?.token) {
+        process(collections);
+    } else if (typeof collections === 'object') {
+        Object.values(collections).forEach(item => {
+            if (item && typeof item === 'object') {
+                process(item);
+            }
+        });
     }
-    
-    const collectionsByContract = {};
-    
-    for (const collection of collectionsData.items) {
-        if (collection.token && collection.token.address) {
-            const contractAddress = collection.token.address.toLowerCase();
-            collectionsByContract[contractAddress] = collection;
+
+    return organized;
+};
+
+function processCollection(collection, organized, seen) {
+    const contractAddress = collection.token?.address?.toLowerCase();
+    if (!contractAddress) return;
+
+    const tokenType = collection.token?.type?.toUpperCase();
+    const tokenId = collection.total?.token_id?.toString();
+    const tokenInstanceId = collection.total?.token_instance?.id?.toString();
+
+    // Chiave univoca globale
+    const globalKey = `${contractAddress}-${tokenId || 'noid'}-${tokenInstanceId || 'noinstance'}`;
+    if (seen.has(globalKey)) {
+        return; // 🔁 Già vista, ignorata
+    }
+    seen.add(globalKey);
+
+    if (!organized[contractAddress]) {
+        organized[contractAddress] = {
+            token: collection.token,
+            token_instances: [],
+            erc1155_tokens: {}
+        };
+    }
+
+    // Solo se ERC-1155 e token_id presente
+    if (tokenType === 'ERC-1155' && tokenId) {
+        // Salviamo solo una volta per token_id
+        if (!organized[contractAddress].erc1155_tokens[tokenId]) {
+            organized[contractAddress].erc1155_tokens[tokenId] = collection;
         }
+
+        const instance = collection.total?.token_instance;
+        if (instance?.id) {
+            if (!organized[contractAddress].token_instances.some(i => i.id === instance.id)) {
+                organized[contractAddress].token_instances.push(instance);
+            }
+        }
+    } else {
+        // ERC-721 o altri
+        const instances = collection.token_instances || [collection.total?.token_instance];
+        instances.forEach(instance => {
+            if (instance?.id && !organized[contractAddress].token_instances.some(i => i.id === instance.id)) {
+                organized[contractAddress].token_instances.push(instance);
+            }
+        });
     }
-    
-    return collectionsByContract;
 }

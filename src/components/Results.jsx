@@ -11,33 +11,6 @@ const Results = ({ contracts, collectionsByContract }) => {
     const [totalBadgesPossible, setTotalBadgesPossible] = useState(0);
 
     useEffect(() => {
-        // console.log('Contracts to scan:', contracts);
-    
-        // Debug log all keys in the collectionsByContract
-        // console.log('All collection keys:', Object.keys(collectionsByContract));
-        
-        // Check each contract with detailed logging
-        contracts.forEach(contract => {
-            const contractAddressLower = contract.address.toLowerCase();
-            const contractFound = collectionsByContract[contractAddressLower];
-            
-            // console.log(`Contract Check - ${contract.name}:`);
-            // console.log(`  Address: ${contract.address}`);
-            // console.log(`  Lowercase: ${contractAddressLower}`);
-            // console.log(`  Found: ${contractFound ? 'YES' : 'NO'}`);
-            
-            // If not found, let's check if it exists with different casing
-            if (!contractFound) {
-                const potentialMatch = Object.keys(collectionsByContract).find(
-                    key => key.toLowerCase() === contractAddressLower.toLowerCase()
-                );
-                
-                if (potentialMatch) {
-                    console.log(`  Found with different casing: ${potentialMatch}`);
-                }
-            }
-        });
-            
         // Calculate total possible badges
         let totalPossibleBadges = 0;
         for (const badgeName in BADGE_INFO) {
@@ -60,8 +33,13 @@ const Results = ({ contracts, collectionsByContract }) => {
             const badgeName = contractObj.name;
             const badgeInfo = BADGE_INFO[badgeName] || { total: 1, description: "Badge" };
     
-            // If collection doesn't exist, it's missing
-            if (!collection || !collection.token_instances || collection.token_instances.length === 0) {
+            // Check for collection based on the new API structure
+            const hasTokenInstances = collection && 
+                ((collection.token_instances && collection.token_instances.length > 0) || 
+                 (collection.total && collection.total.token_instance));
+    
+            // If collection doesn't exist or doesn't have tokens, it's missing
+            if (!hasTokenInstances) {
                 missingBadgesArray.push({
                     name: badgeName,
                     count: 0,
@@ -83,13 +61,28 @@ const Results = ({ contracts, collectionsByContract }) => {
             // Found at least one collection
             foundAnyFlag = true;
             
-            // Count badges in this collection
-            const collectionBadgeCount = collection.token_instances.length;
+            // Count badges in this collection based on API structure
+            let collectionBadgeCount = 0;
+            if (collection.token_instances) {
+                collectionBadgeCount = collection.token_instances.length;
+            } else if (collection.total && collection.total.token_instance) {
+                // If we have the new structure, count as 1 token
+                collectionBadgeCount = 1;
+            }
+            
             totalFound += collectionBadgeCount;
 
-            // Add to collection badges array with proper naming
             // Use the collection name from API if available, otherwise use the contract name
-            const displayName = collection.token.name || badgeName;
+            let displayName;
+            if (collection.token && collection.token.name) {
+                displayName = collection.token.name;
+            } else if (collection.total && collection.total.token_instance && 
+                      collection.total.token_instance.token && 
+                      collection.total.token_instance.token.name) {
+                displayName = collection.total.token_instance.token.name;
+            } else {
+                displayName = badgeName;
+            }
             
             badgesArray.push({
                 name: displayName,
@@ -109,10 +102,6 @@ const Results = ({ contracts, collectionsByContract }) => {
                 });
             }
         });
-    
-        // console.log('Missing Badges:', missingBadgesArray);
-        // console.log('Badges By Collection:', badgesArray);
-        // console.log('Total Badges Found:', totalFound);
     
         // Update state with the calculated values
         setMissingBadges(missingBadgesArray);
@@ -179,117 +168,157 @@ const Results = ({ contracts, collectionsByContract }) => {
             );
         }
 
-        const collectionBadgeCount = collection.token_instances ? collection.token_instances.length : 0;
+        // Determine collection badge count based on API structure
+        let collectionBadgeCount = 0;
+        if (collection.token_instances) {
+            collectionBadgeCount = collection.token_instances.length;
+        } else if (collection.total && collection.total.token_instance) {
+            collectionBadgeCount = 1;
+        }
+
+        // Get collection name based on API structure
+        let displayName = collectionName;
+        if (collection.token && collection.token.name) {
+            displayName = collection.token.name;
+        } else if (collection.total && collection.total.token_instance && 
+                  collection.total.token_instance.token &&
+                  collection.total.token_instance.token.name) {
+            displayName = collection.total.token_instance.token.name;
+        }
+
+        // Get collection symbol based on API structure
+        let symbol = '';
+        if (collection.token && collection.token.symbol) {
+            symbol = collection.token.symbol;
+        } else if (collection.total && collection.total.token_instance && 
+                  collection.total.token_instance.token &&
+                  collection.total.token_instance.token.symbol) {
+            symbol = collection.total.token_instance.token.symbol;
+        }
 
         return (
             <div key={contractAddress}>
                 <div className="collection-header mt-4">
                     <h3 className="collection-name">
-                        {collection.token.name || collectionName}
-                        {collection.token.symbol ? ` (${collection.token.symbol})` : ''} 
+                        {displayName}
+                        {symbol ? ` (${symbol})` : ''} 
                         - {collectionBadgeCount}/{badgeInfo.total}
                     </h3>
                 </div>
 
+                {/* Handle the old API structure */}
                 {collection.token_instances && collection.token_instances.length > 0 ? (
-                    collection.token_instances.map((instance, idx) => {
-                        const localImageUrl = getLocalImageUrl(collection.token.name || collectionName);
-
-                        let mediaUrl;
-                        // Try to determine the best media URL with better IPFS handling
-                        if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
-                            // Handle IPFS URLs in different formats
-                            if (instance.image_url.includes('ipfs://')) {
-                                const cid = instance.image_url.replace('ipfs://', '');
-                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                            } else if (instance.image_url.includes('gateway.pinata.cloud/ipfs/')) {
-                                const cid = instance.image_url.split('gateway.pinata.cloud/ipfs/')[1];
-                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                            } else if (instance.image_url.includes('ipfs.io/ipfs/')) {
-                                // Use an alternative gateway since ipfs.io seems to be failing
-                                const cid = instance.image_url.split('ipfs.io/ipfs/')[1];
-                                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
-                            } else {
-                                mediaUrl = instance.image_url;
-                            }
-                        } else if (instance.metadata?.animation_url && 
-                                instance.metadata.animation_url !== "null" && 
-                                instance.metadata.animation_url !== null) {
-                            // Handle animation URLs with IPFS formats
-                            if (instance.metadata.animation_url.includes('ipfs://')) {
-                                const cid = instance.metadata.animation_url.replace('ipfs://', '');
-                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                            } else {
-                                mediaUrl = instance.metadata.animation_url;
-                            }
-                        } else if (instance.metadata?.image && 
-                                instance.metadata.image !== "null" && 
-                                instance.metadata.image !== null) {
-                            // Handle image URLs from metadata with IPFS formats
-                            if (instance.metadata.image.includes('ipfs://')) {
-                                const cid = instance.metadata.image.replace('ipfs://', '');
-                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                            } else if (instance.metadata.image.includes('gateway.pinata.cloud/ipfs/')) {
-                                const cid = instance.metadata.image.split('gateway.pinata.cloud/ipfs/')[1];
-                                mediaUrl = `https://dweb.link/ipfs/${cid}`;
-                            } else if (instance.metadata.image.includes('ipfs.io/ipfs/')) {
-                                // Use an alternative gateway
-                                const cid = instance.metadata.image.split('ipfs.io/ipfs/')[1]; 
-                                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
-                            } else {
-                                mediaUrl = instance.metadata.image;
-                            }
-                        } else {
-                            // Immediately use local image if no remote URLs are found
-                            mediaUrl = localImageUrl || IMAGE_PLACEHOLDER;
-                        }
-                                            
-                        const name = instance.metadata?.name || collection.token.name || collectionName;
-
-                        return (
-                            <div className="nft-item" key={`${contractAddress}-${instance.id}`}>
-                                <div className="nft-header">
-                                    {isVideoFile(mediaUrl) ? (
-                                        <div className="video-container">
-                                            <video className="nft-video" autoPlay loop muted>
-                                                <source src={mediaUrl} type="video/mp4" />
-                                                Your browser does not support video playback.
-                                            </video>
-                                        </div>
-                                    ) : (
-                                        <img 
-                                            src={mediaUrl} 
-                                            alt={name} 
-                                            className="nft-image" 
-                                            onError={(e) => {
-                                                // console.log('Image failed to load:', mediaUrl);
-                                                e.target.onerror = null; 
-                                                
-                                                // Try to load from local files based on collection name
-                                                const collectionIdentifier = collection.token.name || collectionName;
-                                                const localFallbackUrl = getLocalImageUrl(collectionIdentifier);
-                                                if (localFallbackUrl) {
-                                                    //console.log('Trying local image:', localFallbackUrl);
-                                                    e.target.src = localFallbackUrl;
-                                                } else {
-                                                    //console.log('Using placeholder image');
-                                                    e.target.src = IMAGE_PLACEHOLDER;
-                                                }
-                                            }}
-                                        />
-                                    )}
-                                    <div className="nft-details">
-                                        <h3 className="nft-name">{name}</h3>
-                                        <p className="token"><strong>Token ID:</strong> {instance.id}</p>
-                                        <p className="collection-address">{collection.token.address}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })
+                    collection.token_instances.map((instance, idx) => (
+                        renderNFTItem(instance, displayName, collection, collectionName, contractAddress)
+                    ))
+                ) : collection.total && collection.total.token_instance ? (
+                    // Handle the new API structure
+                    renderNFTItem(collection.total.token_instance, displayName, collection, collectionName, contractAddress)
                 ) : (
                     <p className="mb-4 text-muted">No tokens found for this collection.</p>
                 )}
+            </div>
+        );
+    };
+
+    // Helper function to render an NFT item with consistent handling
+    const renderNFTItem = (instance, displayName, collection, collectionName, contractAddress) => {
+        const localImageUrl = getLocalImageUrl(displayName || collectionName);
+        
+        // Get token info based on what API structure provides
+        const tokenInfo = instance.token || 
+                         (collection.token) || 
+                         {name: displayName, address: contractAddress};
+
+        let mediaUrl;
+        // Try to determine the best media URL with better IPFS handling
+        if (instance.image_url && instance.image_url !== "null" && instance.image_url !== null) {
+            // Handle IPFS URLs in different formats
+            if (instance.image_url.includes('ipfs://')) {
+                const cid = instance.image_url.replace('ipfs://', '');
+                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+            } else if (instance.image_url.includes('gateway.pinata.cloud/ipfs/')) {
+                const cid = instance.image_url.split('gateway.pinata.cloud/ipfs/')[1];
+                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+            } else if (instance.image_url.includes('ipfs.io/ipfs/')) {
+                // Use an alternative gateway since ipfs.io seems to be failing
+                const cid = instance.image_url.split('ipfs.io/ipfs/')[1];
+                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
+            } else {
+                mediaUrl = instance.image_url;
+            }
+        } else if (instance.metadata?.animation_url && 
+                instance.metadata.animation_url !== "null" && 
+                instance.metadata.animation_url !== null) {
+            // Handle animation URLs with IPFS formats
+            if (instance.metadata.animation_url.includes('ipfs://')) {
+                const cid = instance.metadata.animation_url.replace('ipfs://', '');
+                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+            } else {
+                mediaUrl = instance.metadata.animation_url;
+            }
+        } else if (instance.metadata?.image && 
+                instance.metadata.image !== "null" && 
+                instance.metadata.image !== null) {
+            // Handle image URLs from metadata with IPFS formats
+            if (instance.metadata.image.includes('ipfs://')) {
+                const cid = instance.metadata.image.replace('ipfs://', '');
+                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+            } else if (instance.metadata.image.includes('gateway.pinata.cloud/ipfs/')) {
+                const cid = instance.metadata.image.split('gateway.pinata.cloud/ipfs/')[1];
+                mediaUrl = `https://dweb.link/ipfs/${cid}`;
+            } else if (instance.metadata.image.includes('ipfs.io/ipfs/')) {
+                // Use an alternative gateway
+                const cid = instance.metadata.image.split('ipfs.io/ipfs/')[1]; 
+                mediaUrl = `https://cloudflare-ipfs.com/ipfs/${cid}`;
+            } else {
+                mediaUrl = instance.metadata.image;
+            }
+        } else {
+            // Immediately use local image if no remote URLs are found
+            mediaUrl = localImageUrl || IMAGE_PLACEHOLDER;
+        }
+                    
+        const name = instance.metadata?.name || displayName || collectionName;
+
+        return (
+            <div className="nft-item" key={`${contractAddress}-${instance.id}`}>
+                <div className="nft-header">
+                    {isVideoFile(mediaUrl) ? (
+                        <div className="video-container">
+                            <video className="nft-video" autoPlay loop muted>
+                                <source src={mediaUrl} type="video/mp4" />
+                                Your browser does not support video playback.
+                            </video>
+                        </div>
+                    ) : (
+                        <img 
+                            src={mediaUrl} 
+                            alt={name} 
+                            className="nft-image" 
+                            onError={(e) => {
+                                e.target.onerror = null; 
+                                
+                                // Try to load from local files based on collection name
+                                const collectionIdentifier = displayName || collectionName;
+                                const localFallbackUrl = getLocalImageUrl(collectionIdentifier);
+                                if (localFallbackUrl) {
+                                    e.target.src = localFallbackUrl;
+                                } else {
+                                    e.target.src = IMAGE_PLACEHOLDER;
+                                }
+                            }}
+                        />
+                    )}
+                    <div className="nft-details">
+                        <h3 className="nft-name">{name}</h3>
+                        <p className="token"><strong>Token ID:</strong> {instance.id}</p>
+                        <p className="collection-address">{tokenInfo.address}</p>
+                        {instance.metadata?.description && (
+                            <p className="description">{instance.metadata.description}</p>
+                        )}
+                    </div>
+                </div>
             </div>
         );
     };
