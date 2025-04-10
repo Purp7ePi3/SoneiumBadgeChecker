@@ -27,6 +27,10 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x391Dece93d18Fca922bF337C25Ee38BeA74Db63E", name: "Arkada"},
     { address: "0x9a4cC369A91AE5e8cBd99163a2eAC5b7957879dB", name: "Arcas"},
     { address: "0xcf87B2d5Ab008D41159f6737E2a5b6a3Bc40b753", name: "UntitledBank"},
+    { address: "0x4A33e2E308E5d9C0188d209F1bF443Ff7CfB4A31", name: "Sonova"},
+    { address: "0x6DD843fe15dbFD41F001d448cb246ac8b65a6027", name: "Sonefi"},
+    { address: "0xc59f0D1B1b614d8446dDe1760fc3e6ae57bF9501", name: "Orbiter"},
+
 
 ];
 
@@ -54,6 +58,10 @@ export const BADGE_INFO = {
     'WaveX': { total: 1, description: "WaveX"},
     'Arcas': { total: 1, description: "Arcas"},
     'UntitledBank': { total: 1, description: "UntitledBank"},
+    'Sonova': { total: 1, description: "Sonova"},
+    'Sonefi': { total: 1, description: "Sonefi"},
+    'Orbiter': { total: 2, description: "Orbiter"},
+
 };
 
 // Wallet addresses for tips
