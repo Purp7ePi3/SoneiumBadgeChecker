@@ -30,6 +30,8 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x4A33e2E308E5d9C0188d209F1bF443Ff7CfB4A31", name: "Sonova"},
     { address: "0x6DD843fe15dbFD41F001d448cb246ac8b65a6027", name: "Sonefi"},
     { address: "0xc59f0D1B1b614d8446dDe1760fc3e6ae57bF9501", name: "Orbiter"},
+{ address: "0xeAF42993E44be62c9113161c0016821C6A540B92", name: "EverMoon"},
+
 
 
 ];
@@ -61,7 +63,7 @@ export const BADGE_INFO = {
     'Sonova': { total: 1, description: "Sonova"},
     'Sonefi': { total: 1, description: "Sonefi"},
     'Orbiter': { total: 2, description: "Orbiter"},
-
+    'EverMoon': { total: 1, description: "Evermoon"},
 };
 
 // Wallet addresses for tips
