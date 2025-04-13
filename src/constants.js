@@ -30,8 +30,9 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x4A33e2E308E5d9C0188d209F1bF443Ff7CfB4A31", name: "Sonova"},
     { address: "0x6DD843fe15dbFD41F001d448cb246ac8b65a6027", name: "Sonefi"},
     { address: "0xc59f0D1B1b614d8446dDe1760fc3e6ae57bF9501", name: "Orbiter"},
+    { address: "0x670113b4AE5416E1368669bE1cdcc918871827eA", name: "Hands&Fun"},
 
-
+    
 ];
 
 // Badge info with total counts
@@ -61,6 +62,7 @@ export const BADGE_INFO = {
     'Sonova': { total: 1, description: "Sonova"},
     'Sonefi': { total: 1, description: "Sonefi"},
     'Orbiter': { total: 2, description: "Orbiter"},
+    'Hands&Fun': { total: 1, description: "Hands&Fun"},
 
 };
 
