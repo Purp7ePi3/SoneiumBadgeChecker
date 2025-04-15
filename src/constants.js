@@ -31,8 +31,9 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x6DD843fe15dbFD41F001d448cb246ac8b65a6027", name: "Sonefi"},
     { address: "0xc59f0D1B1b614d8446dDe1760fc3e6ae57bF9501", name: "Orbiter"},
     { address: "0x670113b4AE5416E1368669bE1cdcc918871827eA", name: "Hands&Fun"},
-
-    
+    { address: "0x0DEc30Af3551161606282a6bc1243526b6a3D1E9", name: "SynStation"},
+    { address: "0x83A0C5D831E7869f4c710658CBD1b455Ba92ad00", name: "Layer3"},
+    { address: "0x5C0221a8c3eB5956b70cDC572fA0F6C952274f1A", name: "Quickswap"},
 ];
 
 // Badge info with total counts
@@ -63,7 +64,9 @@ export const BADGE_INFO = {
     'Sonefi': { total: 1, description: "Sonefi"},
     'Orbiter': { total: 2, description: "Orbiter"},
     'Hands&Fun': { total: 1, description: "Hands&Fun"},
-
+    'SynStation': { total: 1, description: "SynStation"},
+    'Layer3': { total: 1, description: "Layer3"},
+    'Quickswap': { total: 1, description: "Quickswap"},
 };
 
 // Wallet addresses for tips
