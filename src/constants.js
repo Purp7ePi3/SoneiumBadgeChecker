@@ -35,8 +35,7 @@ export const DEFAULT_CONTRACTS = [
     { address: "0x83A0C5D831E7869f4c710658CBD1b455Ba92ad00", name: "Layer3"},
     { address: "0x5C0221a8c3eB5956b70cDC572fA0F6C952274f1A", name: "Quickswap"},
     { address: "0xeAF42993E44be62c9113161c0016821C6A540B92", name: "Moon"},
-
-    
+    { address: "0xdA12621Ea3a0050D540069329523F20e1155b7Ca", name: "Fractal"},    
 ];
 
 // Badge info with total counts
@@ -71,6 +70,7 @@ export const BADGE_INFO = {
     'Layer3': { total: 1, description: "Layer3"},
     'Quickswap': { total: 1, description: "Quickswap"},
     'Moon': { total: 1, description: "Moon"},    
+    'Fractal':{ total: 1, description: "Fractal"},  
 };
 
 // Wallet addresses for tips
